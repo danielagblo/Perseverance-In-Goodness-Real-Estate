@@ -151,7 +151,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               </button>
 
               {/* Media Gallery Section */}
-              <div className="w-full md:w-3/5 relative bg-black h-1/2 md:h-full overflow-hidden">
+              <div className="w-full md:w-3/5 relative bg-transparent h-1/2 md:h-full overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentMediaIndex}
