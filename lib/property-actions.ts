@@ -3,7 +3,7 @@
 import dbConnect from "./mongodb";
 import Property from "@/models/Property";
 import s3Client, { uploadToS3 } from "./s3";
-import { PutBucketPolicyCommand } from "@aws-sdk/client-s3";
+import { PutBucketPolicyCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { revalidatePath } from "next/cache";
 
 export async function createProperty(formData: FormData) {
@@ -20,14 +20,16 @@ export async function createProperty(formData: FormData) {
     const baths = formData.get("baths") ? Number(formData.get("baths")) : undefined;
     const area = formData.get("area") as string;
 
-    const mediaUrls = [];
+    const mediaItems = [];
 
     for (const file of mediaFiles) {
       if (file.size > 0) {
         const buffer = Buffer.from(await file.arrayBuffer());
-        const url = await uploadToS3(buffer, file.name, file.type);
-        mediaUrls.push({
+        // uploadToS3 now returns the Proxy URL
+        const { url, key } = await uploadToS3(buffer, file.name, file.type);
+        mediaItems.push({
           url,
+          key,
           type: file.type.startsWith("video") ? "video" : "image",
         });
       }
@@ -38,7 +40,7 @@ export async function createProperty(formData: FormData) {
       description: description || undefined,
       price: price || undefined,
       location: location || undefined,
-      media: mediaUrls,
+      media: mediaItems,
       specs: {
         beds,
         baths,
@@ -63,24 +65,41 @@ export async function updateProperty(id: string, formData: FormData) {
   const description = formData.get("description") as string;
   const price = formData.get("price") as string;
   const location = formData.get("location") as string;
+  const mediaFiles = formData.getAll("media") as File[];
   
   const beds = formData.get("beds") ? Number(formData.get("beds")) : undefined;
   const baths = formData.get("baths") ? Number(formData.get("baths")) : undefined;
   const area = formData.get("area") as string;
 
-  const updateData: any = {
-    title: title || undefined,
-    description: description || undefined,
-    price: price || undefined,
-    location: location || undefined,
-    specs: {
-      beds,
-      baths,
-      area: area || undefined,
-    },
-  };
-
   try {
+    const existing = await Property.findById(id);
+    const mediaItems = [...(existing?.media || [])];
+
+    for (const file of mediaFiles) {
+      if (file.size > 0) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const { url, key } = await uploadToS3(buffer, file.name, file.type);
+        mediaItems.push({
+          url,
+          key,
+          type: file.type.startsWith("video") ? "video" : "image",
+        });
+      }
+    }
+
+    const updateData: any = {
+      title: title || undefined,
+      description: description || undefined,
+      price: price || undefined,
+      location: location || undefined,
+      media: mediaItems,
+      specs: {
+        beds,
+        baths,
+        area: area || undefined,
+      },
+    };
+
     await Property.findByIdAndUpdate(id, updateData);
     revalidatePath("/");
     revalidatePath("/admin");
@@ -97,9 +116,30 @@ export async function getProperties() {
   return JSON.parse(JSON.stringify(properties));
 }
 
+export async function getProperty(id: string) {
+  await dbConnect();
+  const property = await Property.findById(id);
+  if (!property) return null;
+  return JSON.parse(JSON.stringify(property));
+}
+
 export async function deleteProperty(id: string) {
   await dbConnect();
   try {
+    const property = await Property.findById(id);
+    
+    // Delete from S3
+    if (property?.media) {
+      for (const item of property.media) {
+        if (item.key) {
+          await s3Client.send(new DeleteObjectCommand({
+            Bucket: process.env.AWS_S3_BUCKET!,
+            Key: item.key
+          }));
+        }
+      }
+    }
+
     await Property.findByIdAndDelete(id);
     revalidatePath("/");
     revalidatePath("/admin");

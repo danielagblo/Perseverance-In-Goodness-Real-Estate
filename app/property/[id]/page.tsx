@@ -1,5 +1,4 @@
-import dbConnect from "@/lib/mongodb";
-import Property from "@/models/Property";
+import { getProperty } from "@/lib/property-actions";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MediaGallery from "@/components/MediaGallery";
@@ -9,15 +8,11 @@ import { notFound } from "next/navigation";
 export const dynamic = 'force-dynamic';
 
 export default async function PropertyDetailPage({ params }: { params: { id: string } }) {
-  await dbConnect();
-  
-  const property = await Property.findById(params.id).lean();
+  const p = await getProperty(params.id);
 
-  if (!property) {
+  if (!p) {
     notFound();
   }
-
-  const p = JSON.parse(JSON.stringify(property));
 
   return (
     <div className="min-h-screen bg-[#FDFBF7]">

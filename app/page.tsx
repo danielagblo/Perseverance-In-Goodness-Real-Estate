@@ -1,5 +1,4 @@
-import dbConnect from "@/lib/mongodb";
-import Property from "@/models/Property";
+import { getProperties } from "@/lib/property-actions";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
@@ -9,8 +8,7 @@ import Footer from "@/components/Footer";
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  await dbConnect();
-  const properties = await Property.find({}).sort({ createdAt: -1 }).lean();
+  const properties = await getProperties();
 
   return (
     <main className="min-h-screen">
@@ -24,7 +22,7 @@ export default async function Home() {
             Discover a curated collection of premier real estate opportunities tailored for the discerning buyer.
           </p>
         </div>
-        <PropertyGrid properties={JSON.parse(JSON.stringify(properties))} />
+        <PropertyGrid properties={properties} />
       </div>
       <Footer />
     </main>
