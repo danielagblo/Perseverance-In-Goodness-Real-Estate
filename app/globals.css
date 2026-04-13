@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --background: #FDFBF7;
+  --foreground: #2D1B54; /* Deep Purple from Logo */
+  --accent: #B8E600;     /* Lime Green from Logo */
+  --muted: #6B7280;
+  --border: #E5E7EB;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif;
+}
+
+@layer components {
+  .luxury-card {
+    @apply bg-white rounded-3xl overflow-hidden border border-[var(--border)] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+  }
+  
+  .luxury-button {
+    @apply px-8 py-4 bg-[var(--foreground)] text-white rounded-2xl font-semibold transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Custom smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
