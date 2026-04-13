@@ -66,14 +66,17 @@ export async function updateProperty(id: string, formData: FormData) {
   const price = formData.get("price") as string;
   const location = formData.get("location") as string;
   const mediaFiles = formData.getAll("media") as File[];
+  const existingMediaRaw = formData.get("existingMedia") as string;
+  // Use the curated list of existing media sent from the UI (respects removed items)
+  const keptMedia = existingMediaRaw ? JSON.parse(existingMediaRaw) : [];
   
   const beds = formData.get("beds") ? Number(formData.get("beds")) : undefined;
   const baths = formData.get("baths") ? Number(formData.get("baths")) : undefined;
   const area = formData.get("area") as string;
 
   try {
-    const existing = await Property.findById(id);
-    const mediaItems = [...(existing?.media || [])];
+    // Start with kept existing media, then append any newly uploaded files
+    const mediaItems = [...keptMedia];
 
     for (const file of mediaFiles) {
       if (file.size > 0) {
