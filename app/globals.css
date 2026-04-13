@@ -2,10 +2,10 @@
 
 @theme {
   --background: #FDFBF7;
-  --foreground: #2C3E50;
-  --accent: #C0392B;
-  --muted: #7F8C8D;
-  --border: #E9E1D1;
+  --foreground: #2D1B54; /* Deep Purple from Logo */
+  --accent: #B8E600;     /* Lime Green from Logo */
+  --muted: #6B7280;
+  --border: #E5E7EB;
 }
 
 body {

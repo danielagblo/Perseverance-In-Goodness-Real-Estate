@@ -21,7 +21,7 @@ export default function AboutSection() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-[#FDFBF7] rounded-3xl -z-10 border border-[#E9E1D1]"></div>
+            <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-[#FDFBF7] rounded-3xl -z-10 border border-[var(--border)]"></div>
           </motion.div>
 
           <motion.div
@@ -32,12 +32,12 @@ export default function AboutSection() {
             className="flex flex-col space-y-8"
           >
             <div>
-              <span className="text-xs font-bold tracking-[0.4em] text-[#C0392B] uppercase mb-4 block">
+              <span className="text-xs font-bold tracking-[0.4em] text-[var(--accent)] uppercase mb-4 block">
                 Our Heritage
               </span>
-              <h2 className="text-5xl md:text-6xl font-black text-[#2C3E50] leading-tight">
+              <h2 className="text-5xl md:text-6xl font-black text-[var(--foreground)] leading-tight">
                 An Unwavering <br />
-                <span className="italic font-light text-[#D4AF37]">Legacy of Quality.</span>
+                <span className="italic font-light text-[var(--accent)]">Legacy of Quality.</span>
               </h2>
             </div>
             
@@ -53,12 +53,12 @@ export default function AboutSection() {
             <div className="pt-8">
               <div className="grid grid-cols-2 gap-12">
                 <div>
-                  <div className="text-4xl font-black text-[#2C3E50]">15+</div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-[#7F8C8D] mt-2">Years of Excellence</div>
+                  <div className="text-4xl font-black text-[var(--foreground)]">15+</div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-[var(--muted)] mt-2">Years of Excellence</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-black text-[#2C3E50]">$2B+</div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-[#7F8C8D] mt-2">Properties Sold</div>
+                  <div className="text-4xl font-black text-[var(--foreground)]">$2B+</div>
+                  <div className="text-xs font-bold uppercase tracking-widest text-[var(--muted)] mt-2">Properties Sold</div>
                 </div>
               </div>
             </div>

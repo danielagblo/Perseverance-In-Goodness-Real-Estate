@@ -2,8 +2,11 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const secretKey = "secret";
-const key = new TextEncoder().encode(process.env.JWT_SECRET || secretKey);
+const secretKey = process.env.JWT_SECRET;
+if (!secretKey) {
+  throw new Error("JWT_SECRET environment variable is not defined");
+}
+const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: any) {
   return await new SignJWT(payload)
@@ -21,7 +24,12 @@ export async function decrypt(input: string): Promise<any> {
 }
 
 export async function login(password: string) {
-  if (password === process.env.ADMIN_PASSWORD) {
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) {
+    throw new Error("ADMIN_PASSWORD environment variable is not defined");
+  }
+
+  if (password === adminPassword) {
     // Create the session
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
     const session = await encrypt({ admin: true, expires });

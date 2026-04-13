@@ -10,7 +10,7 @@ export default function Hero() {
         <img 
           src="/hero-bg.png" 
           alt="Luxury Penthouse"
-          className="w-full h-full object-cover opacity-60 scale-110"
+          className="w-full h-full object-cover opacity-30 scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#FDFBF7]"></div>
       </div>
@@ -32,10 +32,10 @@ export default function Hero() {
           </motion.span>
           
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold text-white leading-tight mb-12 tracking-tight whitespace-nowrap">
-            Bespoke <span className="italic font-light text-[#D4AF37]">Estates.</span>
+            Bespoke <span className="italic font-light text-[var(--accent)]">Estates.</span>
           </h1>
           
-          <p className="text-white/50 text-base md:text-lg max-w-lg mb-12 leading-relaxed font-medium tracking-wide">
+          <p className="text-white/90 text-base md:text-lg max-w-lg mb-12 leading-relaxed font-medium tracking-wide drop-shadow-sm">
             Discover a digital portfolio of the most exclusive residences in the region. 
             Designed for the relentless pursuit of perfection.
           </p>
@@ -45,17 +45,18 @@ export default function Hero() {
               href="#listings" 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 bg-white text-black text-xs font-black tracking-[0.2em] rounded-none hover:bg-[#D4AF37] hover:text-white transition-all duration-300 shadow-2xl"
+              className="px-10 py-5 bg-white text-black text-xs font-black tracking-[0.2em] rounded-none hover:bg-[var(--accent)] hover:text-white transition-all duration-300 shadow-2xl"
             >
               EXPLORE ADVERTISEMENTS
             </motion.a>
-            <motion.button 
+            <motion.a 
+              href="#about"
               whileHover={{ x: 10 }}
               className="group flex items-center text-white text-xs font-bold tracking-[0.2em] gap-4"
             >
-              OUR PHILOSOPHY
-              <div className="w-12 h-[1px] bg-white/30 group-hover:w-20 group-hover:bg-[#D4AF37] transition-all duration-500"></div>
-            </motion.button>
+              ABOUT
+              <div className="w-12 h-[1px] bg-white/30 group-hover:w-20 group-hover:bg-[var(--accent)] transition-all duration-500"></div>
+            </motion.a>
           </div>
         </motion.div>
       </div>

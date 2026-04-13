@@ -42,7 +42,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           </div>
         )}
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[#2C3E50] text-xs font-bold rounded-full shadow-sm">
+          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[var(--foreground)] text-xs font-bold rounded-full shadow-sm">
             NEW LISTING
           </span>
         </div>
@@ -51,7 +51,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h3 className="text-xl font-bold text-[#2C3E50] group-hover:text-[#C0392B] transition-colors line-clamp-1">
+            <h3 className="text-xl font-bold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors line-clamp-1">
               {property.title || "Untitled Property"}
             </h3>
             <div className="flex items-center text-[#7F8C8D] text-sm mt-1">
@@ -59,32 +59,32 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               {property.location || "Location TBD"}
             </div>
           </div>
-          <span className="text-xl font-black text-[#2C3E50]">
+          <span className="text-xl font-black text-[var(--foreground)]">
             {property.price || "Contact for Price"}
           </span>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 border-t border-[#E9E1D1] pt-4">
+        <div className="grid grid-cols-3 gap-2 border-t border-[var(--border)] pt-4">
           <div className="flex flex-col items-center">
-            <div className="flex items-center text-[#2C3E50] font-bold">
-              <Bed className="w-4 h-4 mr-1 text-[#C0392B]" />
+            <div className="flex items-center text-[var(--foreground)] font-bold">
+              <Bed className="w-4 h-4 mr-1 text-[var(--accent)]" />
               {property.specs?.beds || "-"}
             </div>
             <span className="text-[10px] text-[#7F8C8D] uppercase tracking-wider font-semibold">Beds</span>
           </div>
-          <div className="flex flex-col items-center border-x border-[#E9E1D1]">
-            <div className="flex items-center text-[#2C3E50] font-bold">
-              <Bath className="w-4 h-4 mr-1 text-[#C0392B]" />
+          <div className="flex flex-col items-center border-x border-[var(--border)]">
+            <div className="flex items-center text-[var(--foreground)] font-bold">
+              <Bath className="w-4 h-4 mr-1 text-[var(--accent)]" />
               {property.specs?.baths || "-"}
             </div>
-            <span className="text-[10px] text-[#7F8C8D] uppercase tracking-wider font-semibold">Baths</span>
+            <span className="text-[10px] text-[var(--muted)] uppercase tracking-wider font-semibold">Baths</span>
           </div>
           <div className="flex flex-col items-center">
-            <div className="flex items-center text-[#2C3E50] font-bold">
-              <Maximize className="w-4 h-4 mr-1 text-[#C0392B]" />
+            <div className="flex items-center text-[var(--foreground)] font-bold">
+              <Maximize className="w-4 h-4 mr-1 text-[var(--accent)]" />
               {property.specs?.area || "-"}
             </div>
-            <span className="text-[10px] text-[#7F8C8D] uppercase tracking-wider font-semibold">Sq Ft</span>
+            <span className="text-[10px] text-[var(--muted)] uppercase tracking-wider font-semibold">Sq Ft</span>
           </div>
         </div>
       </div>

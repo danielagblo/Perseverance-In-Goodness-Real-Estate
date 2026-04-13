@@ -22,13 +22,12 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <Link 
-          href="/" 
-          className={`text-2xl font-black tracking-[0.2em] transition-colors duration-500 ${
-            isScrolled ? "text-[#2C3E50]" : "text-white"
-          }`}
-        >
-          PERSEVERANCE
+        <Link href="/" className="transition-all duration-300 transform hover:scale-105">
+          <img 
+            src="/logo.png" 
+            alt="Perseverance in Goodness" 
+            className="h-12 w-auto transition-all duration-500"
+          />
         </Link>
         
         <div className={`hidden md:flex items-center space-x-12 text-xs font-bold tracking-[0.3em] transition-colors duration-500 ${

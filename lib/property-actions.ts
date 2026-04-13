@@ -53,3 +53,22 @@ export async function createProperty(formData: FormData) {
     return { success: false, error: "Failed to create property" };
   }
 }
+
+export async function getProperties() {
+  await dbConnect();
+  const properties = await Property.find({}).sort({ createdAt: -1 });
+  return JSON.parse(JSON.stringify(properties));
+}
+
+export async function deleteProperty(id: string) {
+  await dbConnect();
+  try {
+    await Property.findByIdAndDelete(id);
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting property:", error);
+    return { success: false };
+  }
+}

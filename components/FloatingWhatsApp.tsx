@@ -1,8 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export default function FloatingWhatsApp() {
+  const pathname = usePathname();
+  
+  // Don't show on admin pages
+  if (pathname?.startsWith("/admin")) return null;
   return (
     <motion.a
       href="https://wa.me/233555123456"
