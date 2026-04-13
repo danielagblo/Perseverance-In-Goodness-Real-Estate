@@ -1,26 +1,46 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #FDFBF7;
+  --foreground: #2C3E50;
+  --accent: #C0392B;
+  --muted: #7F8C8D;
+  --border: #E9E1D1;
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  font-family: 'Outfit', sans-serif;
+}
+
+@layer components {
+  .luxury-card {
+    @apply bg-white rounded-3xl overflow-hidden border border-[var(--border)] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+  }
+  
+  .luxury-button {
+    @apply px-8 py-4 bg-[var(--foreground)] text-white rounded-2xl font-semibold transition-all hover:bg-opacity-90 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Custom smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
