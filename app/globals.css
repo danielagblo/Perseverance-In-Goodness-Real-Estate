@@ -20,11 +20,11 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer components {
   .luxury-card {
-    @apply bg-white rounded-3xl overflow-hidden border border-[var(--border)] transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+    @apply bg-white rounded-3xl overflow-hidden border border-(--border) shadow-lg transition-all duration-500;
   }
   
   .luxury-button {
-    @apply px-8 py-4 bg-[var(--foreground)] text-white rounded-2xl font-semibold transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98];
+    @apply px-10 py-5 bg-(--foreground) text-white font-black tracking-[0.3em] rounded-2xl transition-all duration-300 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98];
   }
 
   .bento-grid {

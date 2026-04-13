@@ -68,7 +68,7 @@ export default function MediaGallery({ media }: MediaGalleryProps) {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`relative flex-shrink-0 w-32 aspect-video rounded-xl overflow-hidden border-2 transition-all ${
+            className={`relative shrink-0 w-32 aspect-video rounded-xl overflow-hidden border-2 transition-all ${
               currentIndex === index ? "border-[#C0392B] scale-105" : "border-transparent opacity-60 hover:opacity-100"
             }`}
           >

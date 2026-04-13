@@ -78,34 +78,34 @@ export default function AdminDashboard() {
       <div className="max-w-6xl mx-auto">
         <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
-            <h1 className="text-4xl font-black text-[var(--foreground)] tracking-tight">PORTAL</h1>
-            <p className="text-[var(--muted)] font-medium">Manage your elite real estate advertisements.</p>
+            <h1 className="text-4xl font-black text-(--foreground) tracking-tight">PORTAL</h1>
+            <p className="text-(--muted) font-medium">Manage your elite real estate advertisements.</p>
           </div>
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-8 py-4 bg-[var(--foreground)] text-white rounded-2xl font-bold transition-all hover:bg-[var(--foreground)]/90 shadow-xl shadow-[var(--foreground)]/20"
+            className="flex items-center gap-2 px-8 py-4 bg-(--foreground) text-white rounded-2xl font-bold transition-all hover:bg-(--foreground)/90 shadow-xl shadow-(--foreground)/20"
           >
-            <Plus className="w-5 h-5 text-[var(--accent)]" />
+            <Plus className="w-5 h-5 text-(--accent)" />
             NEW LISTING
           </button>
         </header>
 
         <section>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-[var(--foreground)] uppercase tracking-widest flex items-center gap-3">
+            <h2 className="text-xl font-bold text-(--foreground) uppercase tracking-widest flex items-center gap-3">
               Active Listings
-              <span className="bg-[var(--accent)] text-[var(--foreground)] text-[10px] px-2 py-0.5 rounded-full">{properties.length}</span>
+              <span className="bg-(--accent) text-(--foreground) text-[10px] px-2 py-0.5 rounded-full">{properties.length}</span>
             </h2>
           </div>
 
           {fetching ? (
             <div className="flex flex-col items-center justify-center py-32 space-y-4">
-              <Loader2 className="w-12 h-12 text-[var(--accent)] animate-spin" />
-              <p className="text-[var(--muted)] font-bold tracking-widest text-xs">SYNCHRONIZING...</p>
+              <Loader2 className="w-12 h-12 text-(--accent) animate-spin" />
+              <p className="text-(--muted) font-bold tracking-widest text-xs">SYNCHRONIZING...</p>
             </div>
           ) : properties.length === 0 ? (
-            <div className="bg-white rounded-3xl p-20 text-center border-2 border-dashed border-[var(--border)]">
-              <p className="text-[var(--muted)] font-medium italic">No active advertisements. Click "New Listing" to begin.</p>
+            <div className="bg-white rounded-3xl p-20 text-center border-2 border-dashed border-(--border)">
+              <p className="text-(--muted) font-medium italic">No active advertisements. Click "New Listing" to begin.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -113,9 +113,9 @@ export default function AdminDashboard() {
                 <motion.div 
                   layout
                   key={prop._id}
-                  className="bg-white rounded-3xl overflow-hidden border border-[var(--border)] shadow-sm hover:shadow-xl transition-all group"
+                  className="bg-white rounded-3xl overflow-hidden border border-(--border) shadow-sm hover:shadow-xl transition-all group"
                 >
-                  <div className="aspect-[16/10] bg-gray-100 relative overflow-hidden">
+                  <div className="aspect-16/10 bg-gray-100 relative overflow-hidden">
                     {prop.media?.[0] ? (
                       prop.media[0].type === "video" ? (
                         <video src={prop.media[0].url} className="w-full h-full object-cover" />
@@ -137,11 +137,11 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="font-black text-[var(--foreground)] text-lg line-clamp-1 mb-1">{prop.title || "UNTITLED PROPERTY"}</h3>
-                    <p className="text-[var(--muted)] text-sm font-bold tracking-wide mb-4">{prop.location || "LOCATION NOT SPECIFIED"}</p>
-                    <div className="flex justify-between items-center pt-4 border-t border-[var(--border)]">
-                      <span className="text-[var(--accent)] font-black">{prop.price || "P.O.A"}</span>
-                      <a href={`/property/${prop._id}`} target="_blank" className="text-[var(--foreground)] p-2 hover:bg-[var(--accent)] rounded-lg transition-colors">
+                    <h3 className="font-black text-(--foreground) text-lg line-clamp-1 mb-1">{prop.title || "UNTITLED PROPERTY"}</h3>
+                    <p className="text-(--muted) text-sm font-bold tracking-wide mb-4">{prop.location || "LOCATION NOT SPECIFIED"}</p>
+                    <div className="flex justify-between items-center pt-4 border-t border-(--border)">
+                      <span className="text-(--accent) font-black">{prop.price || "P.O.A"}</span>
+                      <a href={`/property/${prop._id}`} target="_blank" className="text-(--foreground) p-2 hover:bg-(--accent) rounded-lg transition-colors">
                         <ExternalLink className="w-4 h-4" />
                       </a>
                     </div>
@@ -155,13 +155,13 @@ export default function AdminDashboard() {
         {/* Create Listing Modal */}
         <AnimatePresence>
           {isModalOpen && (
-            <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-200 flex items-center justify-center p-4">
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsModalOpen(false)}
-                className="absolute inset-0 bg-[var(--foreground)]/60 backdrop-blur-sm"
+                className="absolute inset-0 bg-(--foreground)/60 backdrop-blur-sm"
               />
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -173,71 +173,71 @@ export default function AdminDashboard() {
                   onClick={() => setIsModalOpen(false)}
                   className="absolute top-8 right-8 p-2 hover:bg-gray-100 rounded-full transition-colors"
                 >
-                  <X className="w-6 h-6 text-[var(--foreground)]" />
+                  <X className="w-6 h-6 text-(--foreground)" />
                 </button>
 
                 <div className="mb-10 text-center">
-                  <h2 className="text-3xl font-black text-[var(--foreground)] tracking-tight">NEW ADVERTISEMENT</h2>
-                  <p className="text-[var(--muted)] font-medium mt-1">Populate the fields to showcase a new luxury asset.</p>
+                  <h2 className="text-3xl font-black text-(--foreground) tracking-tight">NEW ADVERTISEMENT</h2>
+                  <p className="text-(--muted) font-medium mt-1">Populate the fields to showcase a new luxury asset.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
-                      <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Title</label>
+                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Title</label>
                       <input
                         name="title"
                         placeholder="e.g. Modern Villa with Pool"
-                        className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--accent)] outline-none transition-all font-semibold"
+                        className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Price</label>
+                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Price</label>
                       <input
                         name="price"
                         placeholder="e.g. $1,200,000"
-                        className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--accent)] outline-none transition-all font-semibold"
+                        className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Location</label>
+                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Location</label>
                     <input
                       name="location"
                       placeholder="e.g. Beverly Hills, CA"
-                      className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--accent)] outline-none transition-all font-semibold"
+                      className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                     />
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Description</label>
+                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Description</label>
                     <textarea
                       name="description"
                       rows={4}
                       placeholder="Describe the luxury details..."
-                      className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] focus:ring-2 focus:ring-[var(--accent)] outline-none transition-all font-semibold"
+                      className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                     />
                   </div>
 
                   <div className="grid grid-cols-3 gap-6">
                     <div className="space-y-3">
-                      <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Beds</label>
-                      <input name="beds" type="number" className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] font-semibold" />
+                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Beds</label>
+                      <input name="beds" type="number" className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Baths</label>
-                      <input name="baths" type="number" className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] font-semibold" />
+                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Baths</label>
+                      <input name="baths" type="number" className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Area (sq ft)</label>
-                      <input name="area" placeholder="e.g. 4,500" className="w-full px-6 py-4 rounded-2xl border border-[var(--border)] font-semibold" />
+                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Area (sq ft)</label>
+                      <input name="area" placeholder="e.g. 4,500" className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-xs font-black text-[var(--foreground)] tracking-widest uppercase ml-1">Media (Images & Videos)</label>
-                    <div className="border-2 border-dashed border-[var(--border)] rounded-[2rem] p-12 text-center hover:border-[var(--accent)] transition-all cursor-pointer relative bg-gray-50/50">
+                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Media (Images & Videos)</label>
+                    <div className="border-2 border-dashed border-(--border) rounded-4xl p-12 text-center hover:border-(--accent) transition-all cursor-pointer relative bg-gray-50/50">
                       <input
                         type="file"
                         multiple
@@ -247,16 +247,16 @@ export default function AdminDashboard() {
                       />
                       <div className="flex flex-col items-center space-y-4">
                         <div className="p-4 bg-white rounded-full shadow-md">
-                          <Plus className="w-8 h-8 text-[var(--accent)]" />
+                          <Plus className="w-8 h-8 text-(--accent)" />
                         </div>
-                        <p className="text-[var(--muted)] text-sm font-bold tracking-widest uppercase">Click or drag media</p>
+                        <p className="text-(--muted) text-sm font-bold tracking-widest uppercase">Click or drag media</p>
                       </div>
                     </div>
 
                     {previews.length > 0 && (
                       <div className="grid grid-cols-4 gap-4 mt-6">
                         {previews.map((src, index) => (
-                          <div key={index} className="relative group rounded-2xl overflow-hidden aspect-square border border-[var(--border)] shadow-sm">
+                          <div key={index} className="relative group rounded-2xl overflow-hidden aspect-square border border-(--border) shadow-sm">
                             {files[index].type.startsWith("video") ? (
                               <video src={src} className="w-full h-full object-cover" />
                             ) : (
@@ -279,14 +279,14 @@ export default function AdminDashboard() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full py-5 bg-[var(--foreground)] text-[var(--accent)] rounded-2xl font-black text-xs tracking-[0.3em] hover:opacity-90 transition-all disabled:opacity-50 shadow-2xl shadow-[var(--foreground)]/20 uppercase"
+                      className="w-full py-5 bg-(--foreground) text-(--accent) rounded-2xl font-black text-xs tracking-[0.3em] hover:opacity-90 transition-all disabled:opacity-50 shadow-2xl shadow-(--foreground)/20 uppercase"
                     >
                       {loading ? "TRANSMITTING DATA..." : "PUBLISH ADVERTISEMENT"}
                     </button>
                   </div>
 
                   {message && (
-                    <p className={`text-center mt-6 font-bold tracking-widest text-xs uppercase ${message.includes("Error") ? "text-red-500" : "text-[var(--accent)]"}`}>
+                    <p className={`text-center mt-6 font-bold tracking-widest text-xs uppercase ${message.includes("Error") ? "text-red-500" : "text-(--accent)"}`}>
                       {message}
                     </p>
                   )}

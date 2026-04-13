@@ -19,8 +19,8 @@ export default async function Home() {
       <AboutSection />
       <div className="max-w-7xl mx-auto px-6 py-24" id="listings">
         <div className="mb-16 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-4">Featured Estimates</h2>
-          <p className="text-[var(--muted)] text-lg max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-(--foreground) mb-4">Featured Estimates</h2>
+          <p className="text-(--muted) text-lg max-w-2xl mx-auto">
             Discover a curated collection of premier real estate opportunities tailored for the discerning buyer.
           </p>
         </div>
