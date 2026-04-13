@@ -223,9 +223,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                   </p>
                 </div>
 
-                <button className="w-full py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 mt-auto">
+                <a 
+                  href={`https://wa.me/233244214684?text=${encodeURIComponent(`Hi, I'm interested in ${property.title}. Can I get more information?`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 mt-auto text-center block"
+                >
                   INQUIRE NOW
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>

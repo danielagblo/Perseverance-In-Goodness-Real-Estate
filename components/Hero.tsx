@@ -20,7 +20,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl"
+          className="max-w-full lg:max-w-7xl"
         >
           <motion.span 
             initial={{ opacity: 0, letterSpacing: "0.1em" }}
@@ -31,7 +31,7 @@ export default function Hero() {
             Perseverance in Goodness
           </motion.span>
           
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold text-white leading-tight mb-8 md:mb-12 tracking-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold text-white leading-tight mb-8 md:mb-12 tracking-tight md:whitespace-nowrap">
             Bespoke <br className="sm:hidden" />
             <span className="italic font-light text-(--accent)">Estates.</span>
           </h1>
