@@ -84,9 +84,9 @@ export async function updateProperty(id: string, formData: FormData) {
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error updating property:", error);
-    return { success: false };
+    return { success: false, error: error.message || "Failed to update property" };
   }
 }
 
@@ -103,8 +103,8 @@ export async function deleteProperty(id: string) {
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error deleting property:", error);
-    return { success: false };
+    return { success: false, error: error.message || "Failed to delete property" };
   }
 }
