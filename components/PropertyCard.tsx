@@ -133,7 +133,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-black/95 backdrop-blur-md"
+              className="absolute inset-0 bg-black/20 backdrop-blur-md"
             />
             
             <motion.div
@@ -170,11 +170,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
                 {media.length > 1 && (
                   <>
-                    <button onClick={prevMedia} className="absolute left-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md">
-                      <ChevronLeft className="w-6 h-6" />
+                    <button onClick={prevMedia} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white hover:bg-gray-100 text-(--foreground) rounded-full shadow-lg transition-all">
+                      <ChevronLeft className="w-5 h-5" />
                     </button>
-                    <button onClick={nextMedia} className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md">
-                      <ChevronRight className="w-6 h-6" />
+                    <button onClick={nextMedia} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white hover:bg-gray-100 text-(--foreground) rounded-full shadow-lg transition-all">
+                      <ChevronRight className="w-5 h-5" />
                     </button>
                   </>
                 )}
