@@ -30,13 +30,13 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#FDFBF7] p-4 font-sans">
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-2xl border border-[var(--border)]">
+      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-3xl shadow-2xl border border-(--border)">
         <div className="text-center">
           <img src="/logo.png" alt="Logo" className="h-16 w-auto mx-auto mb-6" />
-          <h2 className="text-3xl font-black tracking-tight text-[var(--foreground)]">
+          <h2 className="text-3xl font-black tracking-tight text-(--foreground)">
             DEV PORTAL
           </h2>
-          <p className="mt-2 text-sm text-[var(--muted)] font-medium">
+          <p className="mt-2 text-sm text-(--muted) font-medium">
             Enter your secret key to manage properties.
           </p>
         </div>
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
             <input
               type="password"
               required
-              className="appearance-none rounded-2xl relative block w-full px-5 py-4 border border-[var(--border)] placeholder-gray-400 text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all sm:text-sm font-semibold"
+              className="appearance-none rounded-2xl relative block w-full px-5 py-4 border border-(--border) placeholder-gray-400 text-(--foreground) focus:outline-none focus:ring-2 focus:ring-(--accent) focus:border-transparent transition-all sm:text-sm font-semibold"
               placeholder="Developer Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black tracking-[0.2em] rounded-2xl text-[var(--foreground)] bg-[var(--accent)] hover:opacity-90 transition-all duration-200 disabled:opacity-50 shadow-xl shadow-[var(--accent)]/20"
+            className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black tracking-[0.2em] rounded-2xl text-(--foreground) bg-(--accent) hover:opacity-90 transition-all duration-200 disabled:opacity-50 shadow-xl shadow-(--accent)/20"
           >
             {loading ? "AUTHENTICATING..." : "ENTER PORTAL"}
           </button>

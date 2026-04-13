@@ -17,7 +17,7 @@ export default function FloatingWhatsApp() {
       animate={{ scale: 1, opacity: 1 }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-8 right-8 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:bg-[#20bd5a] transition-colors"
+      className="fixed bottom-8 right-8 z-100 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:bg-[#20bd5a] transition-colors"
       title="Chat with us on WhatsApp"
     >
       <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current">
