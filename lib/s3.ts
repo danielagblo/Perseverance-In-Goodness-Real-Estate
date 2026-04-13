@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, ObjectCannedACL } from "@aws-sdk/client-s3";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION!,
@@ -15,6 +15,7 @@ export async function uploadToS3(file: Buffer, fileName: string, contentType: st
     Key: `properties/${Date.now()}-${fileName}`,
     Body: file,
     ContentType: contentType,
+    ACL: 'public-read' as ObjectCannedACL,
   };
 
   try {
