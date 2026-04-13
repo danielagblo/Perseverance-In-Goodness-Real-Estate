@@ -2,6 +2,7 @@ import dbConnect from "@/lib/mongodb";
 import Property from "@/models/Property";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import AboutSection from "@/components/AboutSection";
 import PropertyGrid from "@/components/PropertyGrid";
 import Footer from "@/components/Footer";
 
@@ -13,6 +14,7 @@ export default async function Home() {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
+      <AboutSection />
       <div className="max-w-7xl mx-auto px-6 py-24" id="listings">
         <div className="mb-16 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-[#2C3E50] mb-4">Featured Estimates</h2>

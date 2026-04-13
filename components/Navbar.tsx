@@ -35,8 +35,7 @@ export default function Navbar() {
           isScrolled ? "text-[#2C3E50]" : "text-white/80"
         }`}>
           <Link href="#listings" className="hover:text-[#C0392B] transition-colors">PROPERTIES</Link>
-          <Link href="#" className="hover:text-[#C0392B] transition-colors">OUR VISION</Link>
-          <Link href="#" className="hover:text-[#C0392B] transition-colors">CONTACT</Link>
+          <Link href="#about" className="hover:text-[#C0392B] transition-colors">ABOUT</Link>
         </div>
 
         <div className="md:hidden">

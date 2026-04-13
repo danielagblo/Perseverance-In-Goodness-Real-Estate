@@ -15,11 +15,12 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#FDFBF7]"></div>
       </div>
       
-      <div className="relative z-10 text-center px-6 max-w-6xl">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl"
         >
           <motion.span 
             initial={{ opacity: 0, letterSpacing: "0.1em" }}
@@ -30,17 +31,16 @@ export default function Hero() {
             Perseverance in Goodness
           </motion.span>
           
-          <h1 className="text-5xl md:text-8xl lg:text-9xl font-extrabold text-white leading-[0.9] mb-12 tracking-tight">
-            Curated <br />
-            <span className="italic font-light text-[#D4AF37] block mt-2">Excellence.</span>
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-extrabold text-white leading-tight mb-12 tracking-tight whitespace-nowrap">
+            Bespoke <span className="italic font-light text-[#D4AF37]">Estates.</span>
           </h1>
           
-          <p className="text-white/50 text-base md:text-lg max-w-lg mx-auto mb-12 leading-relaxed font-medium tracking-wide">
+          <p className="text-white/50 text-base md:text-lg max-w-lg mb-12 leading-relaxed font-medium tracking-wide">
             Discover a digital portfolio of the most exclusive residences in the region. 
             Designed for the relentless pursuit of perfection.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+          <div className="flex flex-col sm:flex-row items-center justify-start gap-8">
             <motion.a 
               href="#listings" 
               whileHover={{ scale: 1.05 }}
