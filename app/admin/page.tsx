@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createProperty, getProperties, deleteProperty } from "@/lib/property-actions";
-import { Plus, Image as ImageIcon, Video, X, Trash2, ExternalLink, Loader2 } from "lucide-react";
+import { createProperty, getProperties, deleteProperty, updateProperty } from "@/lib/property-actions";
+import { Plus, Image as ImageIcon, Video, X, Trash2, ExternalLink, Loader2, Edit3 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminDashboard() {
   const [properties, setProperties] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProperty, setEditingProperty] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [message, setMessage] = useState("");
@@ -23,6 +24,20 @@ export default function AdminDashboard() {
     const data = await getProperties();
     setProperties(data);
     setFetching(false);
+  };
+
+  const handleOpenModal = (prop: any = null) => {
+    if (prop) {
+      setEditingProperty(prop);
+      // We don't preview existing media as files, they are just URLs
+      setPreviews([]);
+      setFiles([]);
+    } else {
+      setEditingProperty(null);
+      setPreviews([]);
+      setFiles([]);
+    }
+    setIsModalOpen(true);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,24 +62,28 @@ export default function AdminDashboard() {
     const formData = new FormData(e.currentTarget);
     files.forEach((file) => formData.append("media", file));
 
-    const result = await createProperty(formData);
+    let result;
+    if (editingProperty) {
+      result = await updateProperty(editingProperty._id, formData);
+    } else {
+      result = await createProperty(formData);
+    }
+
     if (result.success) {
-      setMessage("Property created successfully!");
+      setMessage(editingProperty ? "Property updated!" : "Property created!");
       setTimeout(() => {
         setIsModalOpen(false);
         setMessage("");
         fetchProperties();
       }, 1500);
-      e.currentTarget.reset();
-      setFiles([]);
-      setPreviews([]);
     } else {
-      setMessage("Error creating property.");
+      setMessage(result.error || "Operation failed.");
     }
     setLoading(false);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
     if (confirm("Are you sure you want to delete this listing?")) {
       const result = await deleteProperty(id);
       if (result.success) {
@@ -82,7 +101,7 @@ export default function AdminDashboard() {
             <p className="text-(--muted) font-medium">Manage your elite real estate advertisements.</p>
           </div>
           <button 
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => handleOpenModal()}
             className="flex items-center gap-2 px-8 py-4 bg-(--foreground) text-white rounded-2xl font-bold transition-all hover:bg-(--foreground)/90 shadow-xl shadow-(--foreground)/20"
           >
             <Plus className="w-5 h-5 text-(--accent)" />
@@ -113,7 +132,8 @@ export default function AdminDashboard() {
                 <motion.div 
                   layout
                   key={prop._id}
-                  className="bg-white rounded-3xl overflow-hidden border border-(--border) shadow-sm hover:shadow-xl transition-all group"
+                  className="bg-white rounded-3xl overflow-hidden border border-(--border) shadow-sm hover:shadow-xl transition-all group cursor-pointer"
+                  onClick={() => handleOpenModal(prop)}
                 >
                   <div className="aspect-16/10 bg-gray-100 relative overflow-hidden">
                     {prop.media?.[0] ? (
@@ -128,12 +148,20 @@ export default function AdminDashboard() {
                       </div>
                     )}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                       <button 
-                        onClick={() => handleDelete(prop._id)}
-                        className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handleOpenModal(prop); }}
+                          className="p-3 bg-white text-(--foreground) rounded-full hover:bg-(--accent) transition-colors shadow-lg"
+                        >
+                          <Edit3 className="w-5 h-5" />
+                        </button>
+                        <button 
+                          onClick={(e) => handleDelete(prop._id, e)}
+                          className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="p-6">
@@ -141,7 +169,12 @@ export default function AdminDashboard() {
                     <p className="text-(--muted) text-sm font-bold tracking-wide mb-4">{prop.location || "LOCATION NOT SPECIFIED"}</p>
                     <div className="flex justify-between items-center pt-4 border-t border-(--border)">
                       <span className="text-(--accent) font-black">{prop.price || "P.O.A"}</span>
-                      <a href={`/property/${prop._id}`} target="_blank" className="text-(--foreground) p-2 hover:bg-(--accent) rounded-lg transition-colors">
+                      <a 
+                        href={`/property/${prop._id}`} 
+                        target="_blank" 
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-(--foreground) p-2 hover:bg-(--accent) rounded-lg transition-colors"
+                      >
                         <ExternalLink className="w-4 h-4" />
                       </a>
                     </div>
@@ -152,7 +185,7 @@ export default function AdminDashboard() {
           )}
         </section>
 
-        {/* Create Listing Modal */}
+        {/* Create/Edit Listing Modal */}
         <AnimatePresence>
           {isModalOpen && (
             <div className="fixed inset-0 z-200 flex items-center justify-center p-4">
@@ -177,8 +210,12 @@ export default function AdminDashboard() {
                 </button>
 
                 <div className="mb-10 text-center">
-                  <h2 className="text-3xl font-black text-(--foreground) tracking-tight">NEW ADVERTISEMENT</h2>
-                  <p className="text-(--muted) font-medium mt-1">Populate the fields to showcase a new luxury asset.</p>
+                  <h2 className="text-3xl font-black text-(--foreground) tracking-tight uppercase">
+                    {editingProperty ? "Update Advertisement" : "New Advertisement"}
+                  </h2>
+                  <p className="text-(--muted) font-medium mt-1">
+                    {editingProperty ? "Modify the existing listing details." : "Populate the fields to showcase a new luxury asset."}
+                  </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
@@ -187,6 +224,7 @@ export default function AdminDashboard() {
                       <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Title</label>
                       <input
                         name="title"
+                        defaultValue={editingProperty?.title || ""}
                         placeholder="e.g. Modern Villa with Pool"
                         className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                       />
@@ -195,6 +233,7 @@ export default function AdminDashboard() {
                       <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Price</label>
                       <input
                         name="price"
+                        defaultValue={editingProperty?.price || ""}
                         placeholder="e.g. $1,200,000"
                         className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                       />
@@ -205,6 +244,7 @@ export default function AdminDashboard() {
                     <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Location</label>
                     <input
                       name="location"
+                      defaultValue={editingProperty?.location || ""}
                       placeholder="e.g. Beverly Hills, CA"
                       className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                     />
@@ -215,6 +255,7 @@ export default function AdminDashboard() {
                     <textarea
                       name="description"
                       rows={4}
+                      defaultValue={editingProperty?.description || ""}
                       placeholder="Describe the luxury details..."
                       className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
                     />
@@ -223,20 +264,22 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-3 gap-6">
                     <div className="space-y-3">
                       <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Beds</label>
-                      <input name="beds" type="number" className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
+                      <input name="beds" type="number" defaultValue={editingProperty?.specs?.beds || ""} className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
                     </div>
                     <div className="space-y-3">
                       <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Baths</label>
-                      <input name="baths" type="number" className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
+                      <input name="baths" type="number" defaultValue={editingProperty?.specs?.baths || ""} className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
                     </div>
                     <div className="space-y-3">
                       <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Area (sq ft)</label>
-                      <input name="area" placeholder="e.g. 4,500" className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
+                      <input name="area" placeholder="e.g. 4,500" defaultValue={editingProperty?.specs?.area || ""} className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Media (Images & Videos)</label>
+                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">
+                      {editingProperty ? "Add More Media (Optional)" : "Media (Images & Videos)"}
+                    </label>
                     <div className="border-2 border-dashed border-(--border) rounded-4xl p-12 text-center hover:border-(--accent) transition-all cursor-pointer relative bg-gray-50/50">
                       <input
                         type="file"
@@ -252,6 +295,14 @@ export default function AdminDashboard() {
                         <p className="text-(--muted) text-sm font-bold tracking-widest uppercase">Click or drag media</p>
                       </div>
                     </div>
+
+                    {editingProperty?.media && !files.length && (
+                       <div className="text-center py-4">
+                        <p className="text-xs font-bold text-(--muted) uppercase tracking-widest">
+                          {editingProperty.media.length} existing files saved.
+                        </p>
+                      </div>
+                    )}
 
                     {previews.length > 0 && (
                       <div className="grid grid-cols-4 gap-4 mt-6">
@@ -281,7 +332,7 @@ export default function AdminDashboard() {
                       disabled={loading}
                       className="w-full py-5 bg-(--foreground) text-(--accent) rounded-2xl font-black text-xs tracking-[0.3em] hover:opacity-90 transition-all disabled:opacity-50 shadow-2xl shadow-(--foreground)/20 uppercase"
                     >
-                      {loading ? "TRANSMITTING DATA..." : "PUBLISH ADVERTISEMENT"}
+                      {loading ? "TRANSMITTING DATA..." : editingProperty ? "SAVE CHANGES" : "PUBLISH ADVERTISEMENT"}
                     </button>
                   </div>
 

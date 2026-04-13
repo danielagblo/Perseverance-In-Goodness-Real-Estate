@@ -55,6 +55,41 @@ export async function createProperty(formData: FormData) {
   }
 }
 
+export async function updateProperty(id: string, formData: FormData) {
+  await dbConnect();
+  
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const price = formData.get("price") as string;
+  const location = formData.get("location") as string;
+  
+  const beds = formData.get("beds") ? Number(formData.get("beds")) : undefined;
+  const baths = formData.get("baths") ? Number(formData.get("baths")) : undefined;
+  const area = formData.get("area") as string;
+
+  const updateData: any = {
+    title: title || undefined,
+    description: description || undefined,
+    price: price || undefined,
+    location: location || undefined,
+    specs: {
+      beds,
+      baths,
+      area: area || undefined,
+    },
+  };
+
+  try {
+    await Property.findByIdAndUpdate(id, updateData);
+    revalidatePath("/");
+    revalidatePath("/admin");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error updating property:", error);
+    return { success: false, error: error.message || "Failed to update property" };
+  }
+}
+
 export async function getProperties() {
   await dbConnect();
   const properties = await Property.find({}).sort({ createdAt: -1 });
@@ -68,8 +103,8 @@ export async function deleteProperty(id: string) {
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error deleting property:", error);
-    return { success: false };
+    return { success: false, error: error.message || "Failed to delete property" };
   }
 }
