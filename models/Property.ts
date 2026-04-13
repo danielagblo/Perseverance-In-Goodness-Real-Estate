@@ -2,6 +2,7 @@ import mongoose, { Schema, model, models } from 'mongoose';
 
 export interface IMedia {
   url: string;
+  key: string;
   type: 'image' | 'video';
 }
 
@@ -31,6 +32,7 @@ const PropertySchema = new Schema<IProperty>(
     media: [
       {
         url: { type: String, required: false },
+        key: { type: String, required: false },
         type: { type: String, enum: ['image', 'video'], required: false },
       },
     ],
