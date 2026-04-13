@@ -3,11 +3,10 @@ import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  context: { params: Promise<{ path: string[] }> }
 ) {
-  // Await params if using Next.js 15+ patterns, though standard App Router works with direct access
-  const pathParts = await params.path;
-  const key = pathParts.join("/");
+  const { path } = await context.params;
+  const key = path.join("/");
 
   try {
     const response = await getS3Object(key);
