@@ -24,12 +24,24 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <Link href="/" className="transition-all duration-300 transform hover:scale-105">
+          <Link href="/" className="flex items-center gap-3 transition-all duration-300 group">
             <img 
               src="/logo.png" 
-              alt="Perseverance in Goodness" 
-              className="h-12 w-auto transition-all duration-500"
+              alt="Logo" 
+              className="h-10 w-auto transition-all duration-500"
             />
+            <div className="flex flex-col">
+              <span className={`text-[10px] font-black tracking-[0.3em] transition-colors duration-500 leading-tight ${
+                isScrolled ? "text-(--foreground)" : "text-white"
+              }`}>
+                PERSEVERANCE IN GOODNESS
+              </span>
+              <span className={`text-[7px] font-bold tracking-[0.4em] transition-colors duration-500 uppercase opacity-60 ${
+                isScrolled ? "text-(--foreground)" : "text-white"
+              }`}>
+                Real Estate
+              </span>
+            </div>
           </Link>
           
           <div className={`hidden md:flex items-center space-x-12 text-xs font-bold tracking-[0.3em] transition-colors duration-500 ${
