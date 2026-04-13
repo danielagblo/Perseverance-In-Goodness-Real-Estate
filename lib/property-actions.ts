@@ -2,7 +2,8 @@
 
 import dbConnect from "./mongodb";
 import Property from "@/models/Property";
-import { uploadToS3 } from "./s3";
+import s3Client, { uploadToS3 } from "./s3";
+import { PutBucketPolicyCommand } from "@aws-sdk/client-s3";
 import { revalidatePath } from "next/cache";
 
 export async function createProperty(formData: FormData) {
@@ -106,5 +107,35 @@ export async function deleteProperty(id: string) {
   } catch (error: any) {
     console.error("Error deleting property:", error);
     return { success: false, error: error.message || "Failed to delete property" };
+  }
+}
+
+export async function makeBucketPublic() {
+  const bucket = process.env.AWS_S3_BUCKET;
+  if (!bucket) return { success: false, error: "Bucket name missing" };
+
+  const policy = {
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Sid: "PublicRead",
+        Effect: "Allow",
+        Principal: "*",
+        Action: ["s3:GetObject"],
+        Resource: [`arn:aws:s3:::${bucket}/*`],
+      },
+    ],
+  };
+
+  try {
+    const command = new PutBucketPolicyCommand({
+      Bucket: bucket,
+      Policy: JSON.stringify(policy),
+    });
+    await s3Client.send(command);
+    return { success: true };
+  } catch (error: any) {
+    console.error("Failed to set bucket policy:", error);
+    return { success: false, error: error.message };
   }
 }

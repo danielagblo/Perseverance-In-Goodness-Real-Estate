@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createProperty, getProperties, deleteProperty, updateProperty } from "@/lib/property-actions";
-import { Plus, Image as ImageIcon, Video, X, Trash2, ExternalLink, Loader2, Edit3 } from "lucide-react";
+import { createProperty, getProperties, deleteProperty, updateProperty, makeBucketPublic } from "@/lib/property-actions";
+import { Plus, Image as ImageIcon, Video, X, Trash2, ExternalLink, Loader2, Edit3, ShieldAlert } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminDashboard() {
@@ -10,6 +10,7 @@ export default function AdminDashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProperty, setEditingProperty] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
+  const [fixingPermissions, setFixingPermissions] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -24,6 +25,19 @@ export default function AdminDashboard() {
     const data = await getProperties();
     setProperties(data);
     setFetching(false);
+  };
+
+  const handleFixPermissions = async () => {
+    if (confirm("This will attempt to make your whole bucket public so images can be viewed. Continue?")) {
+      setFixingPermissions(true);
+      const result = await makeBucketPublic();
+      if (result.success) {
+        alert("Permissions updated! Your images should be visible now.");
+      } else {
+        alert("Failed to update permissions: " + result.error + "\n\nYou may need to set this manually in your Railway/S3 dashboard.");
+      }
+      setFixingPermissions(false);
+    }
   };
 
   const handleOpenModal = (prop: any = null) => {
@@ -100,13 +114,24 @@ export default function AdminDashboard() {
             <h1 className="text-4xl font-black text-(--foreground) tracking-tight">PORTAL</h1>
             <p className="text-(--muted) font-medium">Manage your elite real estate advertisements.</p>
           </div>
-          <button 
-            onClick={() => handleOpenModal()}
-            className="flex items-center gap-2 px-8 py-4 bg-(--foreground) text-white rounded-2xl font-bold transition-all hover:bg-(--foreground)/90 shadow-xl shadow-(--foreground)/20"
-          >
-            <Plus className="w-5 h-5 text-(--accent)" />
-            NEW LISTING
-          </button>
+          <div className="flex gap-4">
+            <button 
+              onClick={handleFixPermissions}
+              disabled={fixingPermissions}
+              className="flex items-center gap-2 px-6 py-4 border-2 border-[var(--border)] text-[var(--foreground)] rounded-2xl font-bold transition-all hover:bg-red-50 disabled:opacity-50"
+              title="Fix 403 Forbidden errors"
+            >
+              {fixingPermissions ? <Loader2 className="w-5 h-5 animate-spin" /> : <ShieldAlert className="w-5 h-5 text-red-500" />}
+              FIX PERMISSIONS
+            </button>
+            <button 
+              onClick={() => handleOpenModal()}
+              className="flex items-center gap-2 px-8 py-4 bg-(--foreground) text-white rounded-2xl font-bold transition-all hover:bg-(--foreground)/90 shadow-xl shadow-(--foreground)/20"
+            >
+              <Plus className="w-5 h-5 text-(--accent)" />
+              NEW LISTING
+            </button>
+          </div>
         </header>
 
         <section>
