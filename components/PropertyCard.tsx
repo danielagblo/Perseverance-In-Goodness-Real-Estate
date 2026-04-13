@@ -140,7 +140,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-6xl bg-white rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[90vh]"
+              className="relative w-full max-w-6xl bg-white rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh]"
             >
               {/* Close Button */}
               <button 
@@ -151,17 +151,17 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               </button>
 
               {/* Media Gallery Section */}
-              <div className="w-full md:w-3/5 relative bg-black flex items-center justify-center h-1/2 md:h-full">
+              <div className="w-full md:w-3/5 relative bg-black h-1/2 md:h-full overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentMediaIndex}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="w-full h-full flex items-center justify-center"
+                    className="absolute inset-0 w-full h-full flex items-center justify-center"
                   >
                     {activeMedia?.type === 'video' ? (
-                      <video src={activeMedia.url} controls className="max-w-full max-h-full" autoPlay />
+                      <video src={activeMedia.url} controls className="w-full h-full object-contain" autoPlay />
                     ) : (
                       <img src={activeMedia?.url} className="w-full h-full object-contain" alt="Gallery" />
                     )}
