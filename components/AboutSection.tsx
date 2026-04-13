@@ -14,14 +14,21 @@ export default function AboutSection() {
             transition={{ duration: 1 }}
             className="relative"
           >
-            <div className="aspect-4/5 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="aspect-4/5 rounded-3xl overflow-hidden shadow-2xl relative z-10">
               <img 
                 src="/about-bg.png" 
                 alt="Architecture Detail" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-[#FDFBF7] rounded-3xl z-0 border border-(--border)"></div>
+            {/* Floating accent image */}
+            <div className="absolute -bottom-8 -right-8 w-56 h-56 rounded-3xl z-20 overflow-hidden shadow-2xl border-4 border-white">
+              <img 
+                src="/about-img.png" 
+                alt="Luxury Interior" 
+                className="w-full h-full object-cover"
+              />
+            </div>
           </motion.div>
 
           <motion.div

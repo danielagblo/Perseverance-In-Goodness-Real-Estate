@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight, X, Calendar, Info } from "lucide-react";
 import { IProperty } from "@/models/Property";
 
 interface PropertyCardProps {
@@ -12,77 +11,64 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const media = property.media || [];
   const activeMedia = media[currentMediaIndex];
 
-  const nextMedia = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const nextMedia = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentMediaIndex((prev) => (prev + 1) % media.length);
   };
 
-  const prevMedia = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const prevMedia = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setCurrentMediaIndex((prev) => (prev - 1 + media.length) % media.length);
   };
 
   return (
-    <Link href={`/property/${property._id}`}>
+    <>
       <motion.div 
         whileHover={{ y: -10 }}
-        className="luxury-card group h-full flex flex-col"
+        onClick={() => setIsModalOpen(true)}
+        className="luxury-card group h-full flex flex-col cursor-pointer"
       >
-      <div className="relative h-72 w-full overflow-hidden bg-gray-200">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentMediaIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="w-full h-full"
-          >
-            {activeMedia ? (
-              activeMedia.type === 'video' ? (
-                <video 
-                  src={activeMedia.url} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  muted 
-                  loop 
-                  onMouseOver={(e) => (e.target as HTMLVideoElement).play()}
-                  onMouseOut={(e) => (e.target as HTMLVideoElement).pause()}
-                />
+        <div className="relative h-72 w-full overflow-hidden bg-gray-200">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentMediaIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="w-full h-full"
+            >
+              {activeMedia ? (
+                activeMedia.type === 'video' ? (
+                  <video 
+                    src={activeMedia.url} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    muted 
+                    loop 
+                    onMouseOver={(e) => (e.target as HTMLVideoElement).play()}
+                    onMouseOut={(e) => (e.target as HTMLVideoElement).pause()}
+                  />
+                ) : (
+                  <img 
+                    src={activeMedia.url} 
+                    alt={property.title || "Property"} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                )
               ) : (
-                <img 
-                  src={activeMedia.url} 
-                  alt={property.title || "Property"} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              )
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">
-                No Media Available
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  No Media Available
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
 
-        {/* Media Controls */}
-        {media.length > 1 && (
-          <>
-            <button 
-              onClick={prevMedia}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black z-20"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={nextMedia}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black z-20"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+          {/* Media Indicators */}
+          {media.length > 1 && (
             <div className="absolute bottom-4 right-4 flex gap-1 z-20">
               {media.map((_, i) => (
                 <div 
@@ -91,74 +77,165 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 />
               ))}
             </div>
-          </>
-        )}
+          )}
 
-        <div className="absolute top-4 left-4 z-20">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-(--foreground) text-xs font-bold rounded-full shadow-sm">
-            NEW LISTING
-          </span>
+          <div className="absolute top-4 left-4 z-20">
+            <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-(--foreground) text-xs font-bold rounded-full shadow-sm">
+              NEW LISTING
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex flex-col gap-1">
-            {property.title && (
+        <div className="p-6">
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex flex-col gap-1">
               <h3 className="text-xl font-bold text-(--foreground) group-hover:text-(--accent) transition-colors line-clamp-1">
-                {property.title}
+                {property.title || "Luxury Property"}
               </h3>
+              {property.location && (
+                <div className="flex items-center text-[#7F8C8D] text-sm">
+                  <MapPin className="w-3 h-3 mr-1" />
+                  {property.location}
+                </div>
+              )}
+            </div>
+            <span className="text-xl font-black text-(--foreground)">
+              {property.price || "P.O.A"}
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center border-t border-(--border) pt-4">
+            {property.specs?.beds && (
+              <div className="flex items-center text-(--foreground) font-bold text-sm">
+                <Bed className="w-4 h-4 mr-2 text-(--accent)" /> {property.specs.beds}
+              </div>
             )}
-            {property.location && (
-              <div className="flex items-center text-[#7F8C8D] text-sm">
-                <MapPin className="w-3 h-3 mr-1" />
-                {property.location}
+            {property.specs?.baths && (
+              <div className="flex items-center text-(--foreground) font-bold text-sm">
+                <Bath className="w-4 h-4 mr-2 text-(--accent)" /> {property.specs.baths}
+              </div>
+            )}
+            {property.specs?.area && (
+              <div className="flex items-center text-(--foreground) font-bold text-sm">
+                <Maximize className="w-4 h-4 mr-2 text-(--accent)" /> {property.specs.area}
               </div>
             )}
           </div>
-          {property.price && (
-            <span className="text-xl font-black text-(--foreground)">
-              {property.price}
-            </span>
-          )}
         </div>
+      </motion.div>
 
-        <div className="flex justify-between items-center border-t border-(--border) pt-4">
-          {property.specs?.beds && property.specs.beds > 0 && (
-            <div className="flex flex-col items-center">
-              <div className="flex items-center text-(--foreground) font-bold">
-                <Bed className="w-4 h-4 mr-1 text-(--accent)" />
-                {property.specs.beds}
+      {/* Detail Modal / Lightbox */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-8">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              className="absolute inset-0 bg-black/95 backdrop-blur-md"
+            />
+            
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative w-full max-w-6xl bg-white rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[90vh]"
+            >
+              {/* Close Button */}
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-6 right-6 z-50 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white md:text-(--foreground) md:bg-gray-100 rounded-full transition-all"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              {/* Media Gallery Section */}
+              <div className="w-full md:w-3/5 relative bg-black flex items-center justify-center h-1/2 md:h-full">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentMediaIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    {activeMedia?.type === 'video' ? (
+                      <video src={activeMedia.url} controls className="max-w-full max-h-full" autoPlay />
+                    ) : (
+                      <img src={activeMedia?.url} className="w-full h-full object-contain" alt="Gallery" />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+
+                {media.length > 1 && (
+                  <>
+                    <button onClick={prevMedia} className="absolute left-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md">
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button onClick={nextMedia} className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md">
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
+                  </>
+                )}
               </div>
-              <span className="text-[10px] text-(--muted) uppercase tracking-wider font-semibold">Beds</span>
-            </div>
-          )}
-          {property.specs?.baths && property.specs.baths > 0 && (
-            <div className={`flex flex-col items-center ${property.specs?.beds ? "border-l border-(--border) pr-4 ml-4" : ""}`}>
-              <div className="flex items-center text-(--foreground) font-bold">
-                <Bath className="w-4 h-4 mr-1 text-(--accent)" />
-                {property.specs.baths}
+
+              {/* Info Section */}
+              <div className="w-full md:w-2/5 p-8 md:p-12 overflow-y-auto bg-white flex flex-col">
+                <div className="mb-8">
+                  <div className="flex justify-between items-start gap-4 mb-4">
+                    <h2 className="text-3xl md:text-4xl font-black text-(--foreground) tracking-tight uppercase leading-tight">
+                      {property.title}
+                    </h2>
+                    <span className="text-2xl font-black text-(--accent) shrink-0">{property.price}</span>
+                  </div>
+                  <div className="flex items-center text-(--muted) font-bold text-sm tracking-widest uppercase">
+                    <MapPin className="w-4 h-4 mr-2 text-(--accent)" />
+                    {property.location}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-10 pb-8 border-b border-(--border)">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-gray-50 rounded-2xl"><Bed className="w-5 h-5 text-(--accent)" /></div>
+                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Beds</p><p className="font-black text-(--foreground)">{property.specs?.beds || "--"}</p></div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-gray-50 rounded-2xl"><Bath className="w-5 h-5 text-(--accent)" /></div>
+                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Baths</p><p className="font-black text-(--foreground)">{property.specs?.baths || "--"}</p></div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-gray-50 rounded-2xl"><Maximize className="w-5 h-5 text-(--accent)" /></div>
+                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Area</p><p className="font-black text-(--foreground)">{property.specs?.area || "--"}</p></div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-gray-50 rounded-2xl"><Calendar className="w-5 h-5 text-(--accent)" /></div>
+                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Status</p><p className="font-black text-(--foreground)">Available</p></div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  <h4 className="text-sm font-black text-(--foreground) tracking-widest uppercase flex items-center gap-2">
+                    <Info className="w-4 h-4 text-(--accent)" /> Description
+                  </h4>
+                  <p className="text-(--muted) leading-relaxed text-base italic">
+                    {property.description || "Inquire for full architectural details and exclusive features of this premier residence."}
+                  </p>
+                </div>
+
+                <a 
+                  href={`https://wa.me/233244214684?text=${encodeURIComponent(`Hi, I'm interested in ${property.title}. Can I get more information?`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 mt-auto text-center block"
+                >
+                  INQUIRE NOW
+                </a>
               </div>
-              <span className="text-[10px] text-(--muted) uppercase tracking-wider font-semibold">Baths</span>
-            </div>
-          )}
-          {property.specs?.area && (
-            <div className={`flex flex-col items-center ${property.specs?.baths || property.specs?.beds ? "border-l border-(--border) pr-4 ml-4" : ""}`}>
-              <div className="flex items-center text-(--foreground) font-bold">
-                <Maximize className="w-4 h-4 mr-1 text-(--accent)" />
-                {property.specs.area}
-              </div>
-              <span className="text-[10px] text-(--muted) uppercase tracking-wider font-semibold">Sq Ft</span>
-            </div>
-          )}
-          {(!property.specs?.beds && !property.specs?.baths && !property.specs?.area) && (
-            <div className="flex items-center text-(--muted) text-xs italic py-1">
-              Premium listing details protected.
-            </div>
-          )}
-        </div>
-      </div>
-    </motion.div>
-    </Link>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

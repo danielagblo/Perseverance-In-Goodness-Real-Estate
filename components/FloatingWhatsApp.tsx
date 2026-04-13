@@ -10,7 +10,7 @@ export default function FloatingWhatsApp() {
   if (pathname?.startsWith("/admin")) return null;
   return (
     <motion.a
-      href="https://wa.me/233555123456"
+      href="https://wa.me/233244214684"
       target="_blank"
       rel="noopener noreferrer"
       initial={{ scale: 0, opacity: 0 }}
