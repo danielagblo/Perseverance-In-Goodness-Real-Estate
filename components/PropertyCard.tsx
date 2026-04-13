@@ -103,14 +103,18 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="text-xl font-bold text-(--foreground) group-hover:text-(--accent) transition-colors line-clamp-1">
-              {property.title || "Untitled Property"}
-            </h3>
-            <div className="flex items-center text-[#7F8C8D] text-sm mt-1">
-              <MapPin className="w-3 h-3 mr-1" />
-              {property.location || "Location TBD"}
-            </div>
+          <div className="flex flex-col gap-1">
+            {property.title && (
+              <h3 className="text-xl font-bold text-(--foreground) group-hover:text-(--accent) transition-colors line-clamp-1">
+                {property.title}
+              </h3>
+            )}
+            {property.location && (
+              <div className="flex items-center text-[#7F8C8D] text-sm">
+                <MapPin className="w-3 h-3 mr-1" />
+                {property.location}
+              </div>
+            )}
           </div>
           {property.price && (
             <span className="text-xl font-black text-(--foreground)">
