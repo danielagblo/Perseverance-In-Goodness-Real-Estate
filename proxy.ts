@@ -5,7 +5,7 @@ import { decrypt } from "@/lib/auth";
 const protectedRoutes = ["/admin", "/admin/dashboard"]; // Add other admin routes here
 const publicRoutes = ["/admin/login", "/"];
 
-export default async function proxy(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   // 2. Check if the current route is protected or public
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.some(route => path.startsWith(route));

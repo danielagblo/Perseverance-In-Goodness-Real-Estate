@@ -1,8 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
+@theme {
   --background: #FDFBF7;
   --foreground: #2C3E50;
   --accent: #C0392B;
@@ -13,7 +11,11 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-inter), sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif;
 }
 
 @layer components {
@@ -22,7 +24,7 @@ body {
   }
   
   .luxury-button {
-    @apply px-8 py-4 bg-[var(--foreground)] text-white rounded-2xl font-semibold transition-all hover:bg-opacity-90 hover:scale-[1.02] active:scale-[0.98];
+    @apply px-8 py-4 bg-[var(--foreground)] text-white rounded-2xl font-semibold transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98];
   }
 
   .bento-grid {
