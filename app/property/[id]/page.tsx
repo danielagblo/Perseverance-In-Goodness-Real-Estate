@@ -6,6 +6,8 @@ import MediaGallery from "@/components/MediaGallery";
 import { Bed, Bath, Maximize, MapPin, Share2, Heart, Calendar } from "lucide-react";
 import { notFound } from "next/navigation";
 
+export const dynamic = 'force-dynamic';
+
 export default async function PropertyDetailPage({ params }: { params: { id: string } }) {
   await dbConnect();
   
@@ -28,18 +30,18 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
             <div>
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-black text-[#2C3E50] mb-2">{p.title || "Luxury Listing"}</h1>
-                  <div className="flex items-center text-[#7F8C8D]">
+                  <h1 className="text-4xl md:text-5xl font-black text-[var(--foreground)] mb-2">{p.title || "Luxury Listing"}</h1>
+                  <div className="flex items-center text-[var(--muted)]">
                     <MapPin className="w-5 h-5 mr-2" />
                     <span className="text-lg">{p.location || "Location available upon request"}</span>
                   </div>
                 </div>
                 <div className="hidden md:flex gap-4">
-                  <button className="p-3 rounded-full border border-[#D5C9B1] hover:bg-white transition-all">
-                    <Share2 className="w-5 h-5 text-[#2C3E50]" />
+                  <button className="p-3 rounded-full border border-[var(--border)] hover:bg-white transition-all">
+                    <Share2 className="w-5 h-5 text-[var(--foreground)]" />
                   </button>
-                  <button className="p-3 rounded-full border border-[#D5C9B1] hover:bg-white transition-all">
-                    <Heart className="w-5 h-5 text-[#2C3E50]" />
+                  <button className="p-3 rounded-full border border-[var(--border)] hover:bg-white transition-all">
+                    <Heart className="w-5 h-5 text-[var(--foreground)]" />
                   </button>
                 </div>
               </div>
@@ -47,9 +49,9 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
               <MediaGallery media={p.media} />
             </div>
 
-            <div className="bg-white p-8 md:p-12 rounded-3xl border border-[#E9E1D1]">
-              <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">About this Property</h3>
-              <p className="text-[#5D6D7E] leading-loose text-lg whitespace-pre-wrap">
+            <div className="bg-white p-8 md:p-12 rounded-3xl border border-[var(--border)]">
+              <h3 className="text-2xl font-bold text-[var(--foreground)] mb-6">About this Property</h3>
+              <p className="text-[var(--muted)] leading-loose text-lg whitespace-pre-wrap">
                 {p.description || "No description provided for this exclusive property."}
               </p>
             </div>
@@ -57,7 +59,7 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
 
           {/* Right Column: Key Details & CTA */}
           <div className="space-y-8">
-            <div className="bg-[#2C3E50] text-white p-8 rounded-3xl shadow-2xl sticky top-32">
+            <div className="bg-[var(--foreground)] text-white p-8 rounded-3xl shadow-2xl sticky top-32">
               <div className="mb-8">
                 <span className="text-white/60 text-sm font-bold uppercase tracking-widest">Price</span>
                 <div className="text-4xl font-black mt-1">{p.price || "Contact for Price"}</div>
@@ -90,7 +92,7 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
                 </div>
               </div>
 
-              <button className="w-full py-5 bg-[#C0392B] hover:bg-[#D44437] text-white font-black rounded-2xl transition-all shadow-lg mb-4">
+              <button className="w-full py-5 bg-[var(--accent)] hover:bg-[var(--accent)]/90 text-[var(--foreground)] font-black rounded-2xl transition-all shadow-lg mb-4">
                 REQUEST INFORMATION
               </button>
               <button className="w-full py-5 border-2 border-white/20 hover:border-white text-white font-bold rounded-2xl transition-all">
