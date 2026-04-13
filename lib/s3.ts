@@ -44,9 +44,8 @@ export async function uploadToS3(file: Buffer, fileName: string, contentType: st
     const command = new PutObjectCommand(params);
     await s3Client.send(command);
     
-    // Return the Proxy URL (Tres Jolie logic)
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    return { url: `${baseUrl}/api/images/${key}`, key };
+    // Return a relative Proxy URL for portability across domains
+    return { url: `/api/images/${key}`, key };
   } catch (error: any) {
     console.error("S3 UPLOAD ERROR:", error.message);
     throw new Error(`Cloud Storage Error: ${error.message}`);

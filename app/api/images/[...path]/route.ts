@@ -11,12 +11,17 @@ export async function GET(
   try {
     const response = await getS3Object(key);
 
-    // Convert S3 stream to a web-supported Response
-    // We use response.Body as a readable stream
-    return new Response(response.Body as BodyInit, {
+    if (!response.Body) {
+      return new Response("Image not found", { status: 404 });
+    }
+
+    // Use transformToWebStream for compatibility with standard Response
+    const stream = response.Body.transformToWebStream();
+
+    return new Response(stream as BodyInit, {
       headers: {
         "Content-Type": response.ContentType || "image/webp",
-        // Aggressive caching (1 year)
+        "Content-Length": response.ContentLength?.toString() || "",
         "Cache-Control": "public, max-age=31536000, immutable",
       },
     });
