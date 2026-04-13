@@ -15,6 +15,7 @@ export default function AdminDashboard() {
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
+  const [existingMedia, setExistingMedia] = useState<any[]>([]);
 
   useEffect(() => {
     fetchProperties();
@@ -43,15 +44,20 @@ export default function AdminDashboard() {
   const handleOpenModal = (prop: any = null) => {
     if (prop) {
       setEditingProperty(prop);
-      // We don't preview existing media as files, they are just URLs
+      setExistingMedia(prop.media || []);
       setPreviews([]);
       setFiles([]);
     } else {
       setEditingProperty(null);
+      setExistingMedia([]);
       setPreviews([]);
       setFiles([]);
     }
     setIsModalOpen(true);
+  };
+
+  const removeExistingMedia = (index: number) => {
+    setExistingMedia((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +81,8 @@ export default function AdminDashboard() {
 
     const formData = new FormData(e.currentTarget);
     files.forEach((file) => formData.append("media", file));
+    // Pass remaining existing media keys so server knows what to keep
+    formData.append("existingMedia", JSON.stringify(existingMedia));
 
     let result;
     if (editingProperty) {
@@ -321,11 +329,29 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    {editingProperty?.media && !files.length && (
-                       <div className="text-center py-4">
-                        <p className="text-xs font-bold text-(--muted) uppercase tracking-widest">
-                          {editingProperty.media.length} existing files saved.
+                    {existingMedia.length > 0 && (
+                      <div className="mt-6 space-y-3">
+                        <p className="text-xs font-black text-(--foreground) uppercase tracking-widest">
+                          Existing Media — Click ✕ to Remove
                         </p>
+                        <div className="grid grid-cols-4 gap-4">
+                          {existingMedia.map((item: any, index: number) => (
+                            <div key={index} className="relative group rounded-2xl overflow-hidden aspect-square border-2 border-(--border) shadow-sm">
+                              {item.type === "video" ? (
+                                <video src={item.url} className="w-full h-full object-cover" />
+                              ) : (
+                                <img src={item.url} alt={`existing-${index}`} className="w-full h-full object-cover" />
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => removeExistingMedia(index)}
+                                className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
 
