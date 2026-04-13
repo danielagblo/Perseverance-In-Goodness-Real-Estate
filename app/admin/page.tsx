@@ -202,14 +202,6 @@ export default function AdminDashboard() {
                     <p className="text-(--muted) text-sm font-bold tracking-wide mb-4">{prop.location || "LOCATION NOT SPECIFIED"}</p>
                     <div className="flex justify-between items-center pt-4 border-t border-(--border)">
                       <span className="text-(--accent) font-black">{prop.price || "P.O.A"}</span>
-                      <a 
-                        href={`/property/${prop._id}`} 
-                        target="_blank" 
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-(--foreground) p-2 hover:bg-(--accent) rounded-lg transition-colors"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
                     </div>
                   </div>
                 </motion.div>
