@@ -19,9 +19,9 @@ const PerfumeSchema = new Schema(
     description: { type: String },
     media: [
       {
-        url: String,
-        key: String,
-        type: String,
+        url: { type: String },
+        key: { type: String },
+        type: { type: String },
       },
     ],
   },
