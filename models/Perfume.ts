@@ -14,7 +14,7 @@ export interface IPerfume extends Document {
 
 const PerfumeSchema = new Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String, required: false },
     price: { type: String },
     description: { type: String },
     media: [
@@ -28,4 +28,5 @@ const PerfumeSchema = new Schema(
   { timestamps: true }
 );
 
-export const Perfume = models.Perfume || mongoose.model<IPerfume>("Perfume", PerfumeSchema);
+const Perfume = mongoose.models.Perfume || mongoose.model<IPerfume>("Perfume", PerfumeSchema);
+export default Perfume;

@@ -285,7 +285,6 @@ export default function AdminDashboard() {
                         defaultValue={editingItem?.title || ""}
                         placeholder={activeTab === "properties" ? "e.g. Modern Villa with Pool" : "e.g. Midnight Oud"}
                         className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
-                        required
                       />
                     </div>
                     <div className="space-y-3">
