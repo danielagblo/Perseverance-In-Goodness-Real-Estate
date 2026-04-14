@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight, X, Calendar, Info, Phone } from "lucide-react";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { IProperty } from "@/models/Property";
 
 interface PropertyCardProps {
@@ -161,12 +162,20 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 w-full h-full flex items-center justify-center"
+                    className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
                   >
                     {activeMedia?.type === 'video' ? (
-                      <video src={activeMedia.url} controls className="w-full h-full object-cover" autoPlay />
+                      <video src={activeMedia.url} controls className="w-full h-full object-contain" autoPlay />
                     ) : (
-                      <img src={activeMedia?.url} className="w-full h-full object-cover" alt="Gallery" />
+                      <TransformWrapper initialScale={1}>
+                        <TransformComponent wrapperClass="w-full h-full" contentClass="w-full h-full flex items-center justify-center">
+                          <img 
+                            src={activeMedia?.url} 
+                            className="max-w-full max-h-[100dvh] object-contain cursor-grab active:cursor-grabbing" 
+                            alt="Gallery" 
+                          />
+                        </TransformComponent>
+                      </TransformWrapper>
                     )}
                   </motion.div>
                 </AnimatePresence>
@@ -186,14 +195,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               {/* Info Section */}
               <div className="w-full md:w-1/2 p-10 md:p-16 overflow-y-auto bg-[#FDFBF7] flex flex-col border-l border-(--border)/20">
                 <div className="mb-10">
-                  <div className="flex justify-between items-start gap-4 mb-4">
+                  <div className="flex flex-col xl:flex-row xl:justify-between xl:items-end gap-2 xl:gap-4 mb-4">
                     {property.title && (
-                      <h2 className="text-3xl md:text-5xl font-black text-(--foreground) tracking-tighter uppercase leading-[1.1]">
+                      <h2 className="text-2xl md:text-3xl font-black text-(--foreground) tracking-tight uppercase leading-tight max-w-[85%] break-words">
                         {property.title}
                       </h2>
                     )}
                     {property.price && (
-                      <span className="text-2xl font-black text-(--accent) shrink-0">{property.price}</span>
+                      <span className="text-xl md:text-2xl font-black text-(--accent) shrink-0">{property.price}</span>
                     )}
                   </div>
                   <div className="flex items-center text-(--muted) font-bold text-sm tracking-widest uppercase">
