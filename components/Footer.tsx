@@ -21,8 +21,8 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-8 text-xs uppercase tracking-[0.3em] text-white/30">Connect</h4>
             <ul className="space-y-4 text-sm font-medium text-white/50 tracking-wide">
-              <li>OFFICE@PERSEVERANCE.COM</li>
-              <li>+233 (0) 244 214 684</li>
+              <li>fmarssey@gmail.com</li>
+              <li>+233 (0) 240 328 282</li>
               <li>ACCRA, GHANA</li>
             </ul>
           </div>

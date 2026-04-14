@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight, X, Calendar, Info } from "lucide-react";
+import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight, X, Calendar, Info, Phone } from "lucide-react";
 import { IProperty } from "@/models/Property";
 
 interface PropertyCardProps {
@@ -27,7 +27,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
   return (
     <>
-      <motion.div 
+      <motion.div
         whileHover={{ y: -10 }}
         onClick={() => setIsModalOpen(true)}
         className="luxury-card group h-full flex flex-col cursor-pointer"
@@ -44,18 +44,18 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             >
               {activeMedia ? (
                 activeMedia.type === 'video' ? (
-                  <video 
-                    src={activeMedia.url} 
+                  <video
+                    src={activeMedia.url}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    muted 
-                    loop 
+                    muted
+                    loop
                     onMouseOver={(e) => (e.target as HTMLVideoElement).play()}
                     onMouseOut={(e) => (e.target as HTMLVideoElement).pause()}
                   />
                 ) : (
-                  <img 
-                    src={activeMedia.url} 
-                    alt={property.title || "Property"} 
+                  <img
+                    src={activeMedia.url}
+                    alt={property.title || "Property"}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 )
@@ -71,8 +71,8 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           {media.length > 1 && (
             <div className="absolute bottom-4 right-4 flex gap-1 z-20">
               {media.map((_, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentMediaIndex ? "bg-(--accent) w-4" : "bg-white/50"}`}
                 />
               ))}
@@ -135,7 +135,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               onClick={() => setIsModalOpen(false)}
               className="absolute inset-0 bg-black/20 backdrop-blur-md"
             />
-            
+
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -143,7 +143,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               className="relative w-full max-w-6xl bg-white rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh]"
             >
               {/* Close Button */}
-              <button 
+              <button
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-6 right-6 z-50 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white md:text-(--foreground) md:bg-gray-100 rounded-full transition-all"
               >
@@ -223,14 +223,23 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                   </p>
                 </div>
 
-                <a 
-                  href={`https://wa.me/233244214684?text=${encodeURIComponent(`Hi, I'm interested in ${property.title}. Can I get more information?`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 mt-auto text-center block"
-                >
-                  INQUIRE NOW
-                </a>
+                <div className="mt-auto flex flex-col sm:flex-row gap-4">
+                  <a
+                    href="tel:+233240328282"
+                    className="flex-1 py-5 bg-white border-2 border-(--foreground) text-(--foreground) font-black tracking-[0.2em] rounded-2xl hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                  >
+                    <Phone className="w-5 h-5" />
+                    CALL
+                  </a>
+                  <a
+                    href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in ${property.title}. Can I get more information?`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-[2] py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 text-center block"
+                  >
+                    INQUIRE NOW
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>
