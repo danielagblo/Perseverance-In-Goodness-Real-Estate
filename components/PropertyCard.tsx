@@ -89,9 +89,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div className="flex flex-col gap-1">
-              <h3 className="text-xl font-bold text-(--foreground) group-hover:text-(--accent) transition-colors line-clamp-1">
-                {property.title || "Luxury Property"}
-              </h3>
+              {property.title && (
+                <h3 className="text-xl font-bold text-(--foreground) group-hover:text-(--accent) transition-colors line-clamp-1">
+                  {property.title}
+                </h3>
+              )}
               {property.location && (
                 <div className="flex items-center text-[#7F8C8D] text-sm">
                   <MapPin className="w-3 h-3 mr-1" />
@@ -186,9 +188,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               <div className="w-full md:w-2/5 p-8 md:p-12 overflow-y-auto bg-white flex flex-col">
                 <div className="mb-8">
                   <div className="flex justify-between items-start gap-4 mb-4">
-                    <h2 className="text-3xl md:text-4xl font-black text-(--foreground) tracking-tight uppercase leading-tight">
-                      {property.title}
-                    </h2>
+                    {property.title && (
+                      <h2 className="text-3xl md:text-4xl font-black text-(--foreground) tracking-tight uppercase leading-tight">
+                        {property.title}
+                      </h2>
+                    )}
                     {property.price && (
                       <span className="text-2xl font-black text-(--accent) shrink-0">{property.price}</span>
                     )}
@@ -236,7 +240,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     +233 240 328 282
                   </a>
                   <a
-                    href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in ${property.title}. Can I get more information?`)}`}
+                    href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in ${property.title || "this property"}. Can I get more information?`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-[2] py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 text-center block"
