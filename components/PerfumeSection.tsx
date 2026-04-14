@@ -8,11 +8,11 @@ export default function PerfumeSection({ perfumes }: { perfumes: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: -320, behavior: "smooth" });
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: -200, behavior: "smooth" });
   };
 
   const scrollRight = () => {
-    if (scrollRef.current) scrollRef.current.scrollBy({ left: 320, behavior: "smooth" });
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: 200, behavior: "smooth" });
   };
 
   if (!perfumes || perfumes.length === 0) return null;
@@ -48,9 +48,9 @@ export default function PerfumeSection({ perfumes }: { perfumes: any[] }) {
             <motion.div 
               key={perfume._id}
               whileHover={{ y: -10 }}
-              className="min-w-[220px] md:min-w-[260px] bg-transparent rounded-none snap-start flex-shrink-0 flex flex-col group cursor-pointer"
+              className="min-w-[160px] md:min-w-[180px] bg-transparent rounded-none snap-start flex-shrink-0 flex flex-col group cursor-pointer"
             >
-              <div className="aspect-square rounded-none overflow-hidden mb-6 bg-transparent flex items-center justify-center relative border border-(--border)/30">
+              <div className="aspect-square rounded-none overflow-hidden mb-4 bg-transparent flex items-center justify-center relative border border-(--border)/30">
                 {perfume.media && perfume.media[0] ? (
                    <img src={perfume.media[0].url} alt={perfume.title} className="w-full h-full object-contain p-4 transition-transform duration-700 hover:scale-105" />
                 ) : (
@@ -63,10 +63,10 @@ export default function PerfumeSection({ perfumes }: { perfumes: any[] }) {
                 )}
               </div>
               {perfume.title && (
-                <h3 className="font-black text-xl text-(--foreground) mb-2 line-clamp-1">{perfume.title}</h3>
+                <h3 className="font-black text-lg md:text-xl text-(--foreground) mb-1 line-clamp-1">{perfume.title}</h3>
               )}
               {perfume.description && (
-                <p className="text-(--muted) text-sm font-medium line-clamp-2 leading-relaxed mb-6 flex-grow">
+                <p className="text-(--muted) text-[10px] md:text-xs font-medium line-clamp-2 leading-relaxed mb-4 flex-grow">
                   {perfume.description}
                 </p>
               )}
