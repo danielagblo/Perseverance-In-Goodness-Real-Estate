@@ -143,19 +143,18 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-6xl bg-white rounded-4xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[90vh]"
+              className="relative w-full max-w-7xl bg-[#FDFBF7] rounded-none overflow-hidden flex flex-col md:flex-row h-[90vh] md:h-[80vh]"
             >
               {/* Close Button */}
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-6 right-6 z-50 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white md:text-(--foreground) md:bg-gray-100 rounded-full transition-all"
+                className="absolute top-6 right-6 z-50 p-2 text-(--foreground) hover:opacity-50 transition-all font-light"
               >
-                <X className="w-6 h-6" />
+                <X className="w-8 h-8 md:w-10 md:h-10 text-[var(--foreground)] drop-shadow-md" strokeWidth={1} />
               </button>
 
               {/* Media Gallery Section */}
-              <div className="w-full md:w-3/5 relative bg-transparent h-1/2 md:h-full overflow-hidden">
+              <div className="w-full md:w-1/2 relative bg-[#F1EFE9] h-1/2 md:h-full overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentMediaIndex}
@@ -165,31 +164,31 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     className="absolute inset-0 w-full h-full flex items-center justify-center"
                   >
                     {activeMedia?.type === 'video' ? (
-                      <video src={activeMedia.url} controls className="w-full h-full object-contain" autoPlay />
+                      <video src={activeMedia.url} controls className="w-full h-full object-cover" autoPlay />
                     ) : (
-                      <img src={activeMedia?.url} className="w-full h-full object-contain" alt="Gallery" />
+                      <img src={activeMedia?.url} className="w-full h-full object-cover" alt="Gallery" />
                     )}
                   </motion.div>
                 </AnimatePresence>
 
                 {media.length > 1 && (
                   <>
-                    <button onClick={prevMedia} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white hover:bg-gray-100 text-(--foreground) rounded-full shadow-lg transition-all">
-                      <ChevronLeft className="w-5 h-5" />
+                    <button onClick={prevMedia} className="absolute left-4 top-1/2 -translate-y-1/2 p-2 mix-blend-difference text-white hover:opacity-50 transition-opacity">
+                      <ChevronLeft className="w-8 h-8" strokeWidth={1} />
                     </button>
-                    <button onClick={nextMedia} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white hover:bg-gray-100 text-(--foreground) rounded-full shadow-lg transition-all">
-                      <ChevronRight className="w-5 h-5" />
+                    <button onClick={nextMedia} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 mix-blend-difference text-white hover:opacity-50 transition-opacity">
+                      <ChevronRight className="w-8 h-8" strokeWidth={1} />
                     </button>
                   </>
                 )}
               </div>
 
               {/* Info Section */}
-              <div className="w-full md:w-2/5 p-8 md:p-12 overflow-y-auto bg-white flex flex-col">
-                <div className="mb-8">
+              <div className="w-full md:w-1/2 p-10 md:p-16 overflow-y-auto bg-[#FDFBF7] flex flex-col border-l border-(--border)/20">
+                <div className="mb-10">
                   <div className="flex justify-between items-start gap-4 mb-4">
                     {property.title && (
-                      <h2 className="text-3xl md:text-4xl font-black text-(--foreground) tracking-tight uppercase leading-tight">
+                      <h2 className="text-3xl md:text-5xl font-black text-(--foreground) tracking-tighter uppercase leading-[1.1]">
                         {property.title}
                       </h2>
                     )}
@@ -203,49 +202,48 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-10 pb-8 border-b border-(--border)">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-gray-50 rounded-2xl"><Bed className="w-5 h-5 text-(--accent)" /></div>
-                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Beds</p><p className="font-black text-(--foreground)">{property.specs?.beds || "--"}</p></div>
+                <div className="grid grid-cols-2 gap-x-8 gap-y-6 mb-12 pb-10 border-b border-(--border)/20">
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[10px] font-bold text-(--muted) uppercase tracking-widest">Beds</p>
+                    <p className="font-light text-2xl text-(--foreground)">{property.specs?.beds || "--"}</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-gray-50 rounded-2xl"><Bath className="w-5 h-5 text-(--accent)" /></div>
-                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Baths</p><p className="font-black text-(--foreground)">{property.specs?.baths || "--"}</p></div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[10px] font-bold text-(--muted) uppercase tracking-widest">Baths</p>
+                    <p className="font-light text-2xl text-(--foreground)">{property.specs?.baths || "--"}</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-gray-50 rounded-2xl"><Maximize className="w-5 h-5 text-(--accent)" /></div>
-                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Area</p><p className="font-black text-(--foreground)">{property.specs?.area || "--"}</p></div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[10px] font-bold text-(--muted) uppercase tracking-widest">Area</p>
+                    <p className="font-light text-2xl text-(--foreground)">{property.specs?.area || "--"}</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-gray-50 rounded-2xl"><Calendar className="w-5 h-5 text-(--accent)" /></div>
-                    <div><p className="text-[10px] font-bold text-(--muted) uppercase tracking-wider">Status</p><p className="font-black text-(--foreground)">Available</p></div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-[10px] font-bold text-(--muted) uppercase tracking-widest">Status</p>
+                    <p className="font-light text-2xl text-(--foreground)">Available</p>
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-8">
-                  <h4 className="text-sm font-black text-(--foreground) tracking-widest uppercase flex items-center gap-2">
-                    <Info className="w-4 h-4 text-(--accent)" /> Description
+                <div className="space-y-4 mb-12 flex-grow">
+                  <h4 className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">
+                    Description
                   </h4>
-                  <p className="text-(--muted) leading-relaxed text-base italic">
+                  <p className="text-(--foreground) leading-relaxed text-sm/8 font-light">
                     {property.description || "Inquire for full architectural details and exclusive features of this premier residence."}
                   </p>
                 </div>
 
-                <div className="mt-auto flex flex-col sm:flex-row gap-4">
-                  <a
-                    href="tel:+233240328282"
-                    className="flex-1 py-5 bg-white border-2 border-(--foreground) text-(--foreground) font-black tracking-[0.1em] rounded-2xl hover:bg-gray-50 transition-all flex items-center justify-center gap-2 text-xs sm:text-sm"
-                  >
-                    <Phone className="w-4 h-4" />
-                    +233 240 328 282
-                  </a>
+                <div className="mt-auto flex flex-col gap-3">
                   <a
                     href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in ${property.title || "this property"}. Can I get more information?`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-[2] py-5 bg-(--foreground) text-white font-black tracking-[0.2em] rounded-2xl hover:bg-(--foreground)/90 transition-all shadow-xl shadow-(--foreground)/20 text-center block"
+                    className="w-full py-5 border-[1px] border-(--foreground) bg-(--foreground) text-[#FDFBF7] font-bold tracking-[0.2em] uppercase text-xs text-center hover:bg-transparent hover:text-(--foreground) transition-all"
                   >
                     INQUIRE NOW
+                  </a>
+                  <a
+                    href="tel:+233240328282"
+                    className="w-full py-4 bg-transparent text-(--foreground) font-bold tracking-[0.1em] text-center text-xs opacity-60 hover:opacity-100 transition-opacity"
+                  >
+                    +233 240 328 282
                   </a>
                 </div>
               </div>

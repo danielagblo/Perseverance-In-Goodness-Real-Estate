@@ -48,11 +48,11 @@ export default function PerfumeSection({ perfumes }: { perfumes: any[] }) {
             <motion.div 
               key={perfume._id}
               whileHover={{ y: -10 }}
-              className="min-w-[280px] md:min-w-[320px] bg-white rounded-3xl p-6 shadow-xl border border-(--border) snap-start flex-shrink-0 flex flex-col group cursor-pointer"
+              className="min-w-[220px] md:min-w-[260px] bg-transparent rounded-none snap-start flex-shrink-0 flex flex-col group cursor-pointer"
             >
-              <div className="aspect-square rounded-2xl overflow-hidden mb-6 bg-gray-100 flex items-center justify-center relative">
+              <div className="aspect-square rounded-none overflow-hidden mb-6 bg-transparent flex items-center justify-center relative border border-(--border)/30">
                 {perfume.media && perfume.media[0] ? (
-                   <img src={perfume.media[0].url} alt={perfume.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                   <img src={perfume.media[0].url} alt={perfume.title} className="w-full h-full object-contain p-4 transition-transform duration-700 hover:scale-105" />
                 ) : (
                   <ShoppingBag className="w-12 h-12 text-gray-300" />
                 )}
