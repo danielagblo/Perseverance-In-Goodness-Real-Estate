@@ -1,9 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { dbConnect } from "./mongodb";
+import dbConnect from "./mongodb";
 import { Perfume } from "@/models/Perfume";
-import { uploadToS3, deleteFromS3 } from "./s3";
+import s3Client, { uploadToS3 } from "./s3";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export async function getPerfumes() {
   await dbConnect();
@@ -109,7 +110,10 @@ export async function deletePerfume(id: string) {
     if (perfume.media && perfume.media.length > 0) {
       for (const item of perfume.media) {
         if (item.key) {
-          await deleteFromS3(item.key);
+          await s3Client.send(new DeleteObjectCommand({ 
+            Bucket: process.env.AWS_S3_BUCKET!, 
+            Key: item.key 
+          }));
         }
       }
     }
