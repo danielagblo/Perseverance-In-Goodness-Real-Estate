@@ -3,12 +3,14 @@ import Property from "@/models/Property";
 import PropertyClientView from "./PropertyClientView";
 import { notFound } from "next/navigation";
 
-export default async function PropertyPage({ params }: { params: { id: string } }) {
+export default async function PropertyPage({ params }: { params: Promise<{ id: string }> }) {
   await dbConnect();
   
+  const { id } = await params;
+
   let property;
   try {
-    property = await Property.findById(params.id).lean();
+    property = await Property.findById(id).lean();
   } catch (error) {
     return notFound();
   }
