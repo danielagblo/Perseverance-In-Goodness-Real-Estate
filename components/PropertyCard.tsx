@@ -131,7 +131,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       {/* Detail Modal / Lightbox */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-8">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -141,9 +141,9 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             />
 
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              className="relative w-full max-w-7xl bg-[#FDFBF7] rounded-none overflow-hidden flex flex-col md:flex-row h-[90vh] md:h-[80vh]"
+              className="relative w-full h-[100dvh] bg-[#FDFBF7] rounded-none overflow-hidden flex flex-col md:flex-row"
             >
               {/* Close Button */}
               <button
