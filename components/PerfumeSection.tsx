@@ -62,14 +62,16 @@ export default function PerfumeSection({ perfumes }: { perfumes: any[] }) {
                   </div>
                 )}
               </div>
-              <h3 className="font-black text-xl text-(--foreground) mb-2 line-clamp-1">{perfume.title}</h3>
+              {perfume.title && (
+                <h3 className="font-black text-xl text-(--foreground) mb-2 line-clamp-1">{perfume.title}</h3>
+              )}
               {perfume.description && (
                 <p className="text-(--muted) text-sm font-medium line-clamp-2 leading-relaxed mb-6 flex-grow">
                   {perfume.description}
                 </p>
               )}
               <a 
-                href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in purchasing the ${perfume.title} perfume.`)}`}
+                href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in purchasing the ${perfume.title || "featured"} perfume.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-4 border-2 border-(--foreground) text-(--foreground) hover:bg-(--accent) hover:border-(--accent) hover:text-white rounded-xl font-bold tracking-widest text-[10px] text-center transition-all mt-auto flex items-center justify-center gap-2 uppercase"

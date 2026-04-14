@@ -2,13 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import dbConnect from "./mongodb";
-import { Perfume } from "@/models/Perfume";
+import Perfume from "@/models/Perfume";
 import s3Client, { uploadToS3 } from "./s3";
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export async function getPerfumes() {
-  await dbConnect();
   try {
+    await dbConnect();
     const perfumes = await Perfume.find({}).sort({ createdAt: -1 });
     return JSON.parse(JSON.stringify(perfumes));
   } catch (error) {
@@ -18,14 +18,14 @@ export async function getPerfumes() {
 }
 
 export async function createPerfume(formData: FormData) {
-  await dbConnect();
-  
-  const title = formData.get("title") as string;
-  const description = formData.get("description") as string;
-  const price = formData.get("price") as string;
-  const mediaFiles = formData.getAll("media") as File[];
-
   try {
+    await dbConnect();
+  
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const price = formData.get("price") as string;
+    const mediaFiles = formData.getAll("media") as File[];
+    
     const mediaItems = [];
 
     for (const file of mediaFiles) {
@@ -58,17 +58,15 @@ export async function createPerfume(formData: FormData) {
 }
 
 export async function updatePerfume(id: string, formData: FormData) {
-  await dbConnect();
-  
-  const title = formData.get("title") as string;
-  const description = formData.get("description") as string;
-  const price = formData.get("price") as string;
-  const mediaFiles = formData.getAll("media") as File[];
-  const existingMediaRaw = formData.get("existingMedia") as string;
-  // Use the curated list of existing media sent from the UI (respects removed items)
-  const keptMedia = existingMediaRaw ? JSON.parse(existingMediaRaw) : [];
-
   try {
+    await dbConnect();
+    
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const price = formData.get("price") as string;
+    const mediaFiles = formData.getAll("media") as File[];
+    const existingMediaRaw = formData.get("existingMedia") as string;
+    const keptMedia = existingMediaRaw ? JSON.parse(existingMediaRaw) : [];
     const mediaItems = [...keptMedia];
 
     for (const file of mediaFiles) {
@@ -101,9 +99,8 @@ export async function updatePerfume(id: string, formData: FormData) {
 }
 
 export async function deletePerfume(id: string) {
-  await dbConnect();
-  
   try {
+    await dbConnect();
     const perfume = await Perfume.findById(id);
     if (!perfume) return { success: false, error: "Perfume not found" };
 
