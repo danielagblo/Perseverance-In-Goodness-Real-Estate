@@ -23,6 +23,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm font-medium text-white/50 tracking-wide">
               <li>fmarssey@gmail.com</li>
               <li>+233 (0) 240 328 282</li>
+              <li>+233 (0) 244 214 684</li>
               <li>ACCRA, GHANA</li>
             </ul>
           </div>

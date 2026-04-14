@@ -1,14 +1,17 @@
 import { getProperties } from "@/lib/property-actions";
+import { getPerfumes } from "@/lib/perfume-actions";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
 import PropertyGrid from "@/components/PropertyGrid";
+import PerfumeSection from "@/components/PerfumeSection";
 import Footer from "@/components/Footer";
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const properties = await getProperties();
+  const perfumes = await getPerfumes();
 
   return (
     <main className="min-h-screen">
@@ -24,6 +27,7 @@ export default async function Home() {
         </div>
         <PropertyGrid properties={properties} />
       </div>
+      <PerfumeSection perfumes={perfumes} />
       <Footer />
     </main>
   );
