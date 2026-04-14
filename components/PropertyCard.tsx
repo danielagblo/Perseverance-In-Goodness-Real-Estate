@@ -99,9 +99,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 </div>
               )}
             </div>
-            <span className="text-xl font-black text-(--foreground)">
-              {property.price || "P.O.A"}
-            </span>
+            {property.price && (
+              <span className="text-xl font-black text-(--foreground)">
+                {property.price}
+              </span>
+            )}
           </div>
 
           <div className="flex justify-between items-center border-t border-(--border) pt-4">
@@ -187,7 +189,9 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     <h2 className="text-3xl md:text-4xl font-black text-(--foreground) tracking-tight uppercase leading-tight">
                       {property.title}
                     </h2>
-                    <span className="text-2xl font-black text-(--accent) shrink-0">{property.price}</span>
+                    {property.price && (
+                      <span className="text-2xl font-black text-(--accent) shrink-0">{property.price}</span>
+                    )}
                   </div>
                   <div className="flex items-center text-(--muted) font-bold text-sm tracking-widest uppercase">
                     <MapPin className="w-4 h-4 mr-2 text-(--accent)" />
@@ -226,10 +230,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                 <div className="mt-auto flex flex-col sm:flex-row gap-4">
                   <a
                     href="tel:+233240328282"
-                    className="flex-1 py-5 bg-white border-2 border-(--foreground) text-(--foreground) font-black tracking-[0.2em] rounded-2xl hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-5 bg-white border-2 border-(--foreground) text-(--foreground) font-black tracking-[0.1em] rounded-2xl hover:bg-gray-50 transition-all flex items-center justify-center gap-2 text-xs sm:text-sm"
                   >
-                    <Phone className="w-5 h-5" />
-                    CALL
+                    <Phone className="w-4 h-4" />
+                    +233 240 328 282
                   </a>
                   <a
                     href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in ${property.title}. Can I get more information?`)}`}
