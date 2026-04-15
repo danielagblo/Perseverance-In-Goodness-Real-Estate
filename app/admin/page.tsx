@@ -140,43 +140,43 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] p-8 font-sans">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <header className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-(--border)/20 pb-8">
           <div>
-            <h1 className="text-4xl font-black text-(--foreground) tracking-tight">PORTAL</h1>
-            <p className="text-(--muted) font-medium">Manage your portfolio of premium assets.</p>
+            <h1 className="text-4xl md:text-5xl font-black text-(--foreground) tracking-tighter uppercase">Administration</h1>
+            <p className="text-(--muted) text-xs font-bold tracking-[0.2em] uppercase mt-2">Manage your exclusive portfolio</p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 w-full md:w-auto">
             <button 
               onClick={handleFixPermissions}
               disabled={fixingPermissions}
-              className="flex items-center gap-2 px-6 py-4 border-2 border-[var(--border)] text-[var(--foreground)] rounded-2xl font-bold transition-all hover:bg-red-50 disabled:opacity-50"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-4 border-[1px] border-(--foreground) text-(--foreground) rounded-none hover:bg-(--foreground) hover:text-[#FDFBF7] transition-all font-bold text-[10px] tracking-widest uppercase disabled:opacity-50"
               title="Fix 403 Forbidden errors"
             >
-              {fixingPermissions ? <Loader2 className="w-5 h-5 animate-spin" /> : <ShieldAlert className="w-5 h-5 text-red-500" />}
+              {fixingPermissions ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldAlert className="w-4 h-4" />}
               FIX PERMISSIONS
             </button>
             <button 
               onClick={() => handleOpenModal()}
-              className="flex items-center gap-2 px-8 py-4 bg-(--foreground) text-white rounded-2xl font-bold transition-all hover:bg-(--foreground)/90 shadow-xl shadow-(--foreground)/20"
+              className="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-4 bg-(--foreground) text-[#FDFBF7] border-[1px] border-(--foreground) rounded-none hover:bg-transparent hover:text-(--foreground) transition-all font-bold text-[10px] tracking-widest uppercase"
             >
-              <Plus className="w-5 h-5 text-(--accent)" />
+              <Plus className="w-4 h-4" />
               NEW {activeTab === "properties" ? "LISTING" : "PERFUME"}
             </button>
           </div>
         </header>
 
-        <div className="flex gap-4 mb-8">
+        <div className="flex gap-8 mb-10 border-b border-(--border)/10">
           <button
             onClick={() => setActiveTab("properties")}
-            className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-bold transition-all ${activeTab === 'properties' ? 'bg-(--accent) text-white shadow-lg' : 'bg-white text-(--muted) hover:bg-gray-50 border border-(--border)'}`}
+            className={`pb-4 text-xs font-bold tracking-widest uppercase transition-all flex items-center gap-2 ${activeTab === 'properties' ? 'text-(--foreground) border-b-2 border-(--foreground)' : 'text-(--muted) hover:text-(--foreground)'}`}
           >
-            <HomeIcon className="w-5 h-5" /> Properties
+            <HomeIcon className="w-4 h-4" /> Properties
           </button>
           <button
             onClick={() => setActiveTab("perfumes")}
-            className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-bold transition-all ${activeTab === 'perfumes' ? 'bg-(--accent) text-white shadow-lg' : 'bg-white text-(--muted) hover:bg-gray-50 border border-(--border)'}`}
+            className={`pb-4 text-xs font-bold tracking-widest uppercase transition-all flex items-center gap-2 ${activeTab === 'perfumes' ? 'text-(--foreground) border-b-2 border-(--foreground)' : 'text-(--muted) hover:text-(--foreground)'}`}
           >
-            <Droplet className="w-5 h-5" /> Perfumes
+            <Droplet className="w-4 h-4" /> Perfumes
           </button>
         </div>
 
@@ -193,51 +193,50 @@ export default function AdminDashboard() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {items.map((item) => (
-                <motion.div 
-                  layout
-                  key={item._id}
-                  className="bg-white rounded-3xl overflow-hidden border border-(--border) shadow-sm hover:shadow-xl transition-all group cursor-pointer"
-                  onClick={() => handleOpenModal(item)}
-                >
-                  <div className="aspect-16/10 bg-gray-100 relative overflow-hidden">
-                    {item.media?.[0] ? (
-                      item.media[0].type === "video" ? (
-                        <video src={item.media[0].url} className="w-full h-full object-cover" />
+                  <motion.div 
+                    layout
+                    key={item._id}
+                    className="bg-transparent border-[1px] border-(--border)/30 group cursor-pointer hover:border-(--foreground) transition-all flex flex-col"
+                    onClick={() => handleOpenModal(item)}
+                  >
+                    <div className="aspect-square relative overflow-hidden bg-white/50 border-b border-(--border)/30 p-2">
+                      {item.media?.[0] ? (
+                        item.media[0].type === "video" ? (
+                          <video src={item.media[0].url} className="w-full h-full object-cover" />
+                        ) : (
+                          <img src={item.media[0].url} alt={item.title} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-[1.03] transition-transform duration-700" />
+                        )
                       ) : (
-                        <img src={item.media[0].url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                      )
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-300">
-                        <ImageIcon className="w-12 h-12" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                      <div className="flex gap-2">
+                        <div className="w-full h-full flex items-center justify-center text-gray-300">
+                          <ImageIcon className="w-8 h-8" strokeWidth={1} />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-sm">
                         <button 
                           onClick={(e) => { e.stopPropagation(); handleOpenModal(item); }}
-                          className="p-3 bg-white text-(--foreground) rounded-full hover:bg-(--accent) transition-colors shadow-lg"
+                          className="p-4 bg-[#FDFBF7] text-(--foreground) hover:bg-(--foreground) hover:text-[#FDFBF7] border border-(--foreground) transition-all"
                         >
-                          <Edit3 className="w-5 h-5" />
+                          <Edit3 className="w-4 h-4" />
                         </button>
                         <button 
                           onClick={(e) => handleDelete(item._id, e)}
-                          className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg"
+                          className="p-4 bg-[#FDFBF7] text-red-500 hover:bg-red-500 hover:text-[#FDFBF7] border border-red-500 transition-all"
                         >
-                          <Trash2 className="w-5 h-5" />
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-black text-(--foreground) text-lg line-clamp-1 mb-1">{item.title || "UNTITLED"}</h3>
-                    {activeTab === "properties" && (
-                      <p className="text-(--muted) text-sm font-bold tracking-wide mb-4">{item.location || "LOCATION NOT SPECIFIED"}</p>
-                    )}
-                    <div className={`flex justify-between items-center ${activeTab === 'properties' ? 'pt-4 border-t border-(--border)' : 'pt-2'}`}>
-                      {item.price && <span className="text-(--accent) font-black">{item.price}</span>}
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h3 className="font-black text-(--foreground) text-lg line-clamp-1 mb-1 uppercase tracking-tight">{item.title || "UNTITLED"}</h3>
+                      {activeTab === "properties" && (
+                        <p className="text-(--muted) text-[10px] uppercase font-bold tracking-widest line-clamp-1 mb-4">{item.location || "LOCATION NOT SPECIFIED"}</p>
+                      )}
+                      <div className="mt-auto pt-4 flex justify-between items-center border-t border-(--border)/20">
+                        {item.price && <span className="text-(--foreground) font-light tracking-wide">{item.price}</span>}
+                        <span className="text-[9px] text-(--muted) font-bold tracking-[0.2em] uppercase cursor-pointer hover:text-(--foreground)">Edit Details</span>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
               ))}
             </div>
           )}
@@ -255,94 +254,95 @@ export default function AdminDashboard() {
                 className="absolute inset-0 bg-(--foreground)/60 backdrop-blur-sm"
               />
               <motion.div 
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                initial={{ opacity: 0, scale: 0.98, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-white/20"
+                exit={{ opacity: 0, scale: 0.98, y: 10 }}
+                className="relative bg-[#FDFBF7] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-none shadow-2xl p-8 md:p-14 border-[1px] border-(--border)/20"
               >
                 <button 
                   onClick={() => setIsModalOpen(false)}
-                  className="absolute top-8 right-8 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  className="absolute top-6 right-6 p-2 text-(--foreground) hover:opacity-50 transition-opacity"
                 >
-                  <X className="w-6 h-6 text-(--foreground)" />
+                  <X className="w-8 h-8" strokeWidth={1} />
                 </button>
 
-                <div className="mb-10 text-center">
-                  <h2 className="text-3xl font-black text-(--foreground) tracking-tight uppercase">
-                    {editingItem ? `Update ${activeTab === "properties" ? "Advertisement" : "Perfume"}` : `New ${activeTab === "properties" ? "Advertisement" : "Perfume"}`}
+                <div className="mb-12 border-b border-(--border)/20 pb-6">
+                  <h2 className="text-3xl font-black text-(--foreground) tracking-tighter uppercase">
+                    {editingItem ? `Update ${activeTab === "properties" ? "Advertisement" : "Product"}` : `New ${activeTab === "properties" ? "Advertisement" : "Product"}`}
                   </h2>
-                  <p className="text-(--muted) font-medium mt-1">
+                  <p className="text-(--muted) font-bold text-[10px] tracking-[0.2em] uppercase mt-2">
                     {editingItem ? "Modify the existing details." : "Populate the fields to showcase a new asset."}
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Title</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Title</label>
                       <input
                         name="title"
                         defaultValue={editingItem?.title || ""}
                         placeholder={activeTab === "properties" ? "e.g. Modern Villa with Pool" : "e.g. Midnight Oud"}
-                        className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none transition-colors font-light text-xl"
                       />
                     </div>
-                    <div className="space-y-3">
-                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Price</label>
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Price</label>
                       <input
                         name="price"
                         defaultValue={editingItem?.price || ""}
                         placeholder={activeTab === "properties" ? "e.g. $1,200,000" : "e.g. $150"}
-                        className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none transition-colors font-light text-xl"
                       />
                     </div>
                   </div>
 
                   {activeTab === "properties" && (
-                    <div className="space-y-3">
-                      <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Location</label>
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Location</label>
                       <input
                         name="location"
                         defaultValue={editingItem?.location || ""}
                         placeholder="e.g. Beverly Hills, CA"
-                        className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
+                        className="w-full px-0 py-3 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none transition-colors font-light text-xl"
                       />
                     </div>
                   )}
 
-                  <div className="space-y-3">
-                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Description</label>
+                  <div className="space-y-4">
+                    <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Description</label>
                     <textarea
                       name="description"
-                      rows={4}
+                      rows={3}
                       defaultValue={editingItem?.description || ""}
                       placeholder={activeTab === "properties" ? "Describe the luxury details..." : "Describe the scent profile..."}
-                      className="w-full px-6 py-4 rounded-2xl border border-(--border) focus:ring-2 focus:ring-(--accent) outline-none transition-all font-semibold"
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none transition-colors font-light text-lg resize-none"
                     />
                   </div>
 
                   {activeTab === "properties" && (
-                    <div className="grid grid-cols-3 gap-6">
-                      <div className="space-y-3">
-                        <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Beds</label>
-                        <input name="beds" type="number" defaultValue={editingItem?.specs?.beds || ""} className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
+                    <div className="grid grid-cols-3 gap-8 md:gap-12 pt-4">
+                      <div className="space-y-4">
+                        <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Beds</label>
+                        <input name="beds" type="number" defaultValue={editingItem?.specs?.beds || ""} className="w-full px-0 py-2 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none font-light text-2xl" />
                       </div>
-                      <div className="space-y-3">
-                        <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Baths</label>
-                        <input name="baths" type="number" defaultValue={editingItem?.specs?.baths || ""} className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
+                      <div className="space-y-4">
+                        <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Baths</label>
+                        <input name="baths" type="number" defaultValue={editingItem?.specs?.baths || ""} className="w-full px-0 py-2 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none font-light text-2xl" />
                       </div>
-                      <div className="space-y-3">
-                        <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">Area (sq ft)</label>
-                        <input name="area" placeholder="e.g. 4,500" defaultValue={editingItem?.specs?.area || ""} className="w-full px-6 py-4 rounded-2xl border border-(--border) font-semibold" />
+                      <div className="space-y-4">
+                        <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase">Area (sq ft)</label>
+                        <input name="area" placeholder="e.g. 4,500" defaultValue={editingItem?.specs?.area || ""} className="w-full px-0 py-2 bg-transparent border-0 border-b border-(--border)/30 focus:border-(--foreground) focus:ring-0 outline-none font-light text-2xl" />
                       </div>
                     </div>
                   )}
 
-                  <div className="space-y-3">
-                    <label className="text-xs font-black text-(--foreground) tracking-widest uppercase ml-1">
-                      {editingItem ? "Add More Media (Optional)" : "Media (Images & Videos)"}
+                  <div className="space-y-4 pt-4">
+                    <label className="text-[10px] font-bold text-(--muted) tracking-[0.2em] uppercase flex items-center justify-between border-b border-(--border)/20 pb-2">
+                      <span>{editingItem ? "Media Library" : "Attach Media"}</span>
+                      <span className="font-light text-(--muted)">Images & Videos</span>
                     </label>
-                    <div className="border-2 border-dashed border-(--border) rounded-4xl p-12 text-center hover:border-(--accent) transition-all cursor-pointer relative bg-gray-50/50">
+                    <div className="border-[1px] border-dashed border-(--foreground)/30 p-12 text-center hover:border-(--foreground) transition-all cursor-pointer relative bg-transparent">
                       <input
                         type="file"
                         multiple
@@ -351,10 +351,8 @@ export default function AdminDashboard() {
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                       />
                       <div className="flex flex-col items-center space-y-4">
-                        <div className="p-4 bg-white rounded-full shadow-md">
-                          <Plus className="w-8 h-8 text-(--accent)" />
-                        </div>
-                        <p className="text-(--muted) text-sm font-bold tracking-widest uppercase">Click or drag media</p>
+                        <Plus className="w-8 h-8 text-(--foreground) opacity-50" strokeWidth={1} />
+                        <p className="text-(--foreground) text-[10px] font-bold tracking-[0.2em] uppercase">Click or drag media</p>
                       </div>
                     </div>
 
@@ -406,11 +404,11 @@ export default function AdminDashboard() {
                     )}
                   </div>
 
-                  <div className="pt-6">
+                  <div className="pt-8">
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full py-5 bg-(--foreground) text-(--accent) rounded-2xl font-black text-xs tracking-[0.3em] hover:opacity-90 transition-all disabled:opacity-50 shadow-2xl shadow-(--foreground)/20 uppercase"
+                      className="w-full py-5 bg-(--foreground) border-[1px] border-(--foreground) text-[#FDFBF7] font-bold text-[10px] tracking-[0.3em] hover:bg-transparent hover:text-(--foreground) transition-all disabled:opacity-50 uppercase"
                     >
                       {loading ? "TRANSMITTING DATA..." : editingItem ? "SAVE CHANGES" : "PUBLISH"}
                     </button>
