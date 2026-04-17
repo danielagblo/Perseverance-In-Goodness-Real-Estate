@@ -24,6 +24,7 @@ export default function Footer() {
               <li>fmarssey@gmail.com</li>
               <li>+233 (0) 240 328 282</li>
               <li>+233 (0) 244 214 684</li>
+              <li>+233 (0) 208 613 040</li>
               <li>ACCRA, GHANA</li>
             </ul>
           </div>
