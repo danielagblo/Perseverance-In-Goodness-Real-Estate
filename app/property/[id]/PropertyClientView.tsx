@@ -133,7 +133,7 @@ export default function PropertyClientView({ property }: PropertyClientViewProps
 
           <div className="mt-auto flex flex-col gap-3">
             <a
-              href={`https://wa.me/233208613040?text=${encodeURIComponent(
+              href={`https://wa.me/233244214684?text=${encodeURIComponent(
                 `Hi, I'm interested in ${property.title || "this property"}. Can I get more information?`
               )}`}
               target="_blank"
