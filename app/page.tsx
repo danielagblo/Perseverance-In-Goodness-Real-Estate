@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import AboutSection from "@/components/AboutSection";
 import PropertyGrid from "@/components/PropertyGrid";
 import PerfumeSection from "@/components/PerfumeSection";
+import MapSection from "@/components/MapSection";
 import Footer from "@/components/Footer";
 
 export const dynamic = 'force-dynamic';
@@ -28,6 +29,7 @@ export default async function Home() {
         <PropertyGrid properties={properties} />
       </div>
       <PerfumeSection perfumes={perfumes} />
+      <MapSection />
       <Footer />
     </main>
   );
