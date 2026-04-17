@@ -12,7 +12,7 @@ export default function MapSection() {
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=5.55693326,-0.20151447&t=&z=17&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=Perseverance%20In%20Goodness%20Accra&t=&z=17&ie=UTF8&iwloc=&output=embed"
         ></iframe>
       </div>
 
@@ -23,9 +23,13 @@ export default function MapSection() {
             <div className="flex flex-col gap-0.5">
               <span className="text-[9px] font-black text-(--muted) uppercase tracking-[0.2em]">Address</span>
               <p className="text-base font-bold text-(--foreground) leading-tight uppercase tracking-tight">
-                UBA, Cruickshank Lane
+                Perseverance In Goodness
               </p>
-              <p className="text-[10px] font-bold text-(--muted) uppercase tracking-widest">Accra, Ghana</p>
+              <p className="text-[10px] font-bold text-(--muted) uppercase tracking-widest leading-relaxed">
+                Cruickshank Lane <br />
+                Opposite UBA Head Office <br />
+                Accra, Ghana
+              </p>
             </div>
 
             <div className="flex flex-col gap-0.5">
