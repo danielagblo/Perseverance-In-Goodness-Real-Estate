@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bed, Bath, Maximize, MapPin } from "lucide-react";
 import Link from "next/link";
@@ -12,8 +12,30 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const media = property.media || [];
   const activeMedia = media[currentMediaIndex];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            videoRef.current?.play().catch(() => {});
+          } else {
+            videoRef.current?.pause();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [activeMedia]);
 
   return (
     <Link href={`/property/${property._id}`} className="block h-full cursor-pointer focus:outline-none">
@@ -34,12 +56,12 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               {activeMedia ? (
                 activeMedia.type === 'video' ? (
                   <video
+                    ref={videoRef}
                     src={activeMedia.url}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     muted
                     loop
-                    onMouseOver={(e) => (e.target as HTMLVideoElement).play()}
-                    onMouseOut={(e) => (e.target as HTMLVideoElement).pause()}
+                    playsInline
                   />
                 ) : (
                   <img
