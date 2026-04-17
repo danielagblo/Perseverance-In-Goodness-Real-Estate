@@ -71,7 +71,7 @@ export default function PerfumeSection({ perfumes }: { perfumes: any[] }) {
                 </p>
               )}
               <a 
-                href={`https://wa.me/233208613040?text=${encodeURIComponent(`Hi, I'm interested in purchasing the ${perfume.title || "featured"} perfume.`)}`}
+                href={`https://wa.me/233244214684?text=${encodeURIComponent(`Hi, I'm interested in purchasing the ${perfume.title || "featured"} perfume.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3 border-[1px] border-(--foreground) text-(--foreground) hover:bg-(--accent) hover:border-(--accent) hover:text-white rounded-lg font-bold tracking-widest text-[8px] md:text-[9px] text-center transition-all mt-auto flex items-center justify-center gap-1.5 uppercase"
