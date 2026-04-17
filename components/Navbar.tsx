@@ -20,7 +20,7 @@ export default function Navbar() {
     <>
       <nav 
         className={`fixed top-0 left-0 right-0 z-100 transition-all duration-500 ${
-          isScrolled ? "bg-white/80 backdrop-blur-lg py-4 shadow-sm" : "bg-transparent py-8"
+          isScrolled ? "bg-white/80 backdrop-blur-lg py-4 shadow-sm" : "bg-white/5 backdrop-blur-[2px] py-8"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -28,16 +28,18 @@ export default function Navbar() {
             <img 
               src="/logo.png" 
               alt="Logo" 
-              className="h-10 w-auto transition-all duration-500"
+              className={`transition-all duration-500 ${
+                isScrolled ? "h-10" : "h-16 brightness-110 contrast-125 saturate-110 drop-shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+              } w-auto`}
             />
             <div className="flex flex-col">
-              <span className={`text-[10px] font-black tracking-[0.3em] transition-colors duration-500 leading-tight ${
-                isScrolled ? "text-(--foreground)" : "text-white"
+              <span className={`transition-all duration-500 leading-tight ${
+                isScrolled ? "text-[10px] font-black tracking-[0.3em] text-(--foreground)" : "text-[12px] font-black tracking-[0.4em] text-white"
               }`}>
                 PERSEVERANCE IN GOODNESS
               </span>
-              <span className={`text-[7px] font-bold tracking-[0.4em] transition-colors duration-500 uppercase opacity-60 ${
-                isScrolled ? "text-(--foreground)" : "text-white"
+              <span className={`transition-all duration-500 uppercase opacity-60 ${
+                isScrolled ? "text-[7px] font-bold tracking-[0.4em] text-(--foreground)" : "text-[9px] font-black tracking-[0.5em] text-white"
               }`}>
                 Real Estate
               </span>

@@ -4,15 +4,15 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#1A1A1A]">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/hero-bg.png" 
           alt="Luxury Penthouse"
-          className="w-full h-full object-cover opacity-30 scale-110"
+          className="w-full h-full object-cover opacity-50 scale-110"
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-[#FDFBF7]"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-white/20 via-transparent to-[#FDFBF7]"></div>
       </div>
       
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
